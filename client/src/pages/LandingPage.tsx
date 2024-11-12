@@ -25,7 +25,8 @@ const LandingPage = () => {
         }
 
         try {
-            const response = await searchYuGiOhCard(searchInput);
+            
+            const response = await searchYuGiOhCard(searchInput); 
 
             if (!response.ok) {
                 throw new Error('something went wrong!');
