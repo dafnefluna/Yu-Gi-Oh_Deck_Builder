@@ -17,9 +17,9 @@ import { saveCardIds, getSavedCardIds } from '../utils/localStorage';
 
 
 const LandingPage = () => {
-    const [ searchedCards, setSearchedCards ] = useState<Cards[]>([]);
-    const [ searchInput, setSearchInput ] = useState('')
-    const [ savedCardIds, setSavedCardIds ] = useState(getSavedCardIds());
+    const [searchedCards, setSearchedCards] = useState<Cards[]>([]);
+    const [searchInput, setSearchInput] = useState('')
+    const [savedCardIds, setSavedCardIds] = useState(getSavedCardIds());
 
 
     useEffect(() => {
@@ -39,7 +39,7 @@ const LandingPage = () => {
             if (!response.ok) {
                 throw new Error('something went wrong!');
             }
-            
+
             const { data } = await response.json();
             console.log(data);
 
@@ -65,7 +65,7 @@ const LandingPage = () => {
         if (!token) {
             return false;
         }
-        
+
         try {
 
             setSavedCardIds([cardId]);
