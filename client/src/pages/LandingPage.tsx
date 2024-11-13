@@ -1,21 +1,30 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 import {
     Container,
     Col,
     Form,
     Button,
-    // Card,
+    Card,
     Row
 } from 'react-bootstrap';
 
-import { searchYuGiOhCard } from '../utils/API';
-// import type { YuGiOhCard } from '../models/YuGiOhAPISearch';
-// import Auth from '../utils/auth';
+import type { Cards } from '../interfaces/Card'
+import { searchYuGiOhCard } from '../utils/mutations';
+import type { YuGiOhCard } from '../interfaces/YuGiOhAPISearch';
+import Auth from '../utils/auth';
+import { saveCardIds, getSavedCardIds } from '../utils/localStorage';
+
 
 const LandingPage = () => {
-    // const [searchedCards, setSearchedCards] = useState<Card[]>([]);
-    const [searchInput, setSearchInput] = useState('')
+    const [ searchedCards, setSearchedCards ] = useState<Cards[]>([]);
+    const [ searchInput, setSearchInput ] = useState('')
+    const [ savedCardIds, setSavedCardIds ] = useState(getSavedCardIds());
+
+
+    useEffect(() => {
+        return () => saveCardIds(savedCardIds);
+    })
 
     const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -25,27 +34,43 @@ const LandingPage = () => {
         }
 
         try {
-            
-            const response = await searchYuGiOhCard(searchInput); 
+            const response = await searchYuGiOhCard(searchInput);
 
             if (!response.ok) {
                 throw new Error('something went wrong!');
             }
+            
+            const { data } = await response.json();
+            console.log(data);
 
-            // const { items } = await response.json();
+            const cardData = data.map((card: YuGiOhCard) => ({
+                cardId: card.id,
+                name: card.name,
+                type: card.type,
+                description: card.desc,
+                image: card.card_images[0].image_url,
+            }));
+            console.log(cardData);
 
-            // const cardData = items.map((card: YuGiOhCard) => ({
-            //     cardId: card.id,
-            //     name: card.cardInfo.name,
-            //     type: card.cardInfo.type,
-            //     description: card.cardInfo.description,
-            //     image: card.cardInfo.image?.thumbnail || '',
-            // }));
-
-            // setSearchedCards(cardData);
+            setSearchedCards(cardData);
             setSearchInput('');
         } catch (err) {
             console.error(err);
+        }
+    };
+
+    const handleSaveCard = async (cardId: string) => {
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+        if (!token) {
+            return false;
+        }
+        
+        try {
+
+            setSavedCardIds([cardId]);
+        } catch (error) {
+            console.error('Error saving card: ', error);
         }
     };
 
@@ -75,38 +100,38 @@ const LandingPage = () => {
             </div>
 
             <Container>
-                {/* <h2 className='pt-5'>
+                <h2 className='pt-5'>
                     {searchedCards.length
                         ? `Viewing ${searchedCards.length} results:`
                         : 'Search for a card to begin'}
-                </h2> */}
-                {/* <Row>
+                </h2>
+                <Row>
                     {searchedCards.map((card) => {
                         return (
-                            <Col md="4" key={card.cardId}>
+                            <Col md="4" key={card.id}>
                                 <Card border='dark'>
                                     {card.image ? (
                                         <Card.Img src={card.image} alt={`Art for ${card.name}`} variant='top' />
                                     ) : null}
                                     <Card.Body>
-                                        <Card.Title>{card.name}</Card.Title>
+                                        <Card.Text>{card.name}</Card.Text>
                                         <Card.Text>{card.description}</Card.Text>
                                         {Auth.loggedIn() && (
-                                            // <Button
-                                            //     disabled={savedCardIds?.some((savedCardkId: string) => savedBookId === card.cardId)}
-                                            //     className='btn-block btn-info'
-                                            //     onClick={() => handleSaveCard(card.cardId)}>
-                                            //     {savedCardIds?.some((savedCardId: string) => savedCardId === card.cardId)
-                                            //         ? 'This book has already been saved!'
-                                            //         : 'Save this Book!'}
-                                            // </Button>
+                                            <Button
+                                                disabled={savedCardIds?.some((savedCardId: string) => savedCardId === card.id)}
+                                                className='btn-block btn-info'
+                                                onClick={() => handleSaveCard(card.id)}>
+                                                {savedCardIds?.some((savedCardId: string) => savedCardId === card.id)
+                                                    ? 'This card has already been saved!'
+                                                    : 'Save this Card!'}
+                                            </Button>
                                         )}
                                     </Card.Body>
                                 </Card>
                             </Col>
                         );
                     })}
-                </Row> */}
+                </Row>
             </Container>
         </>
     );
