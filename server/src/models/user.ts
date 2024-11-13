@@ -1,6 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
-// note: import card model 
+import Card from './card.js';
 // note: import deck model
 
 // note: mongoose automatically adds ID
@@ -8,8 +8,8 @@ interface IUser extends Document {
     username: string;
     email: string;
     password: string;
-    savedCards: Schema.Types.ObjectId[];
-    decks: Schema.Types.ObjectId[];
+    savedCards: Array<typeof Card>;
+    // decks: Schema.Types.ObjectId[];
     isCorrectPassword(password: string): Promise<boolean>;
 }
 
@@ -32,16 +32,8 @@ const userSchema = new Schema<IUser>(
             required: true,
             minlength: 5,
         },
-        savedCards: [
-            {
-                type: Schema.Types.ObjectId,
-            }
-        ],
-        decks: [
-            {
-                type: Schema.Types.ObjectId,
-            }
-        ],
+        savedCards: [Card],
+        // decks: [],
     },
     {
         timestamps: true,
