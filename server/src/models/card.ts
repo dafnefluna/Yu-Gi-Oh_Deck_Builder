@@ -1,5 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 
+// todo: add question marks for consideration of the spell/trap/ non monster cards
 // Define an interface for the Thought document
 interface ICard extends Document {
 id: number;
