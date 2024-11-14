@@ -1,5 +1,10 @@
 import gql from 'graphql-tag';
 
+// the typedefs are replacing our routes and the resolver is our controllers
+// note: when we get to the end in type User, think about removing password for security purposes if nothing break
+// the arrays are referring the types in
+
+
 const typeDefs = gql`
     type User {
         _id: ID
@@ -43,11 +48,18 @@ const typeDefs = gql`
         user: User
     }
 
-# note: can I switch the key in queary to allcards and alldecks for the queary
-    type Queary {
+
+    type Query {
         allCards: [Card]
         allDecks: [Deck]
-        deckById(id: ID!): Deck
+        cardById(cardId: ID!): Card
+        deckById(deckId: ID!): Deck
+        userById(userId: ID!): User
+    }
+
+    type Mutation {
+        #this is the cruds not reading
     }
 `
+export default typeDefs;
 // todo: work with type queary and type mutation with Andrew

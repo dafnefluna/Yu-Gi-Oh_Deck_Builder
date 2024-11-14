@@ -4,8 +4,10 @@ import type { Request, Response } from 'express';
 import db from './config/connection.js'
 import { ApolloServer } from '@apollo/server';// Note: Import from @apollo/server-express
 import { expressMiddleware } from '@apollo/server/express4';
-// import { typeDefs, resolvers } from './schemas/index.js';
-import { authenticateToken } from './utils/auth.js';
+import { typeDefs, resolvers } from './schemas/index.js';
+// import { authenticateToken } from './utils/auth.js';
+
+// note: bring back authentication token when we finish adding context to the front end
 
 const server = new ApolloServer({
   typeDefs,
@@ -24,9 +26,11 @@ const startApolloServer = async () => {
 
   app.use('/graphql', expressMiddleware(server as any,
     {
-      context: authenticateToken as any
+      // context: authenticateToken as any
     }
   ));
+
+// note: might revisit the __dirname at render bc picky
 
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));

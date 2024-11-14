@@ -4,6 +4,9 @@ import { Card, Deck, User} from '../models/index.js';
 // todo: finish resolvers and copied the add user and login from activity 28
 
 const resolvers ={
+    Query: {
+
+    },
     Mutation: {
         addUser: async (_parent: any, { input }: AddUserArgs) => {
             // Create a new user with the provided username, email, and password
