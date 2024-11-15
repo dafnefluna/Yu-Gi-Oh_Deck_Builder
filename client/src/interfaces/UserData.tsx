@@ -1,7 +1,8 @@
 export interface UserData {
-  id: number | null;
+  // id: number | null;
   username: string | null;
   email: string | null;
+  password: string | null;
 }
 
 // note: pulled from activity 26 in module 18
