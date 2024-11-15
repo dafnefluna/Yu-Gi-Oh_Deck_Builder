@@ -17,6 +17,21 @@ const typeDefs = gql`
 
     type Card {
         _id: ID
+        apiId: Number
+        name: String
+        type: string
+        description: String
+        attack: Number
+        defense: Number
+        level: Number
+        attribute: String
+        race: String
+        archetype: String
+        image: String
+    }
+
+    input CardInput{
+        apiId: Number
         name: String
         type: string
         description: String
@@ -33,6 +48,13 @@ const typeDefs = gql`
         _id: ID
         playable: Boolean
         cards: [Card]
+        type: String
+        user: String!
+    }
+
+    input DeckInput {
+        playable: Boolean
+        cards?: [Card]
         type: String
         user: String!
     }
@@ -54,11 +76,21 @@ const typeDefs = gql`
         allDecks: [Deck]
         cardById(cardId: ID!): Card
         deckById(deckId: ID!): Deck
-        userById(userId: ID!): User
+        # userById(userId: ID!): User
+        user(username: String!): User
+        me: User
     }
 
     type Mutation {
         #this is the cruds not reading
+        addUser(input: UserInput!): Auth
+        login(username: String!, password: String!): Auth
+        addCardToUser(input: CardInput): Card
+        addCardToDeck(deckId: String!, cardId: String!): Deck
+        createDeck(input: DeckInput): Deck
+        # deleteCard()
+        # deleteDeck()
+
     }
 `
 export default typeDefs;
