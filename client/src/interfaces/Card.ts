@@ -1,7 +1,13 @@
 export interface Cards {
-    id: string;
-    name: string;
-    type: string;
-    description: string;
+    id: BigInteger;
     image: string;
+    name: string;
+    attribute: string;
+    level: BigInteger;
+    race: string;
+    type: string;
+    archetype: string;
+    description: string;
+    atk: BigInteger;
+    def: BigInteger;
 }
