@@ -47,14 +47,14 @@ const typeDefs = gql`
     type Deck {
         _id: ID
         playable: Boolean
-        cards: [Card]
+        cards?: [String]
         type: String
         user: String!
     }
 
     input DeckInput {
         playable: Boolean
-        cards?: [Card]
+        cards?: [String]
         type: String
         user: String!
     }
@@ -88,10 +88,11 @@ const typeDefs = gql`
         addCardToUser(input: CardInput): Card
         addCardToDeck(deckId: String!, cardId: String!): Deck
         createDeck(input: DeckInput): Deck
-        # deleteCard()
-        # deleteDeck()
-
+        # deleteCardFromUser(cardId: String!): Card
+        deleteCardFromDeck(deckId: String!, cardId: String!): Deck
+        # deleteDeck(deckId: String!): Deck
+        updateDeckName(deckId: String!): Deck
     }
 `
 export default typeDefs;
-// todo: work with type queary and type mutation with Andrew
+// todo: need at least one delete, pick one, and if time, can do the rest

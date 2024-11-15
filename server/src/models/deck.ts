@@ -2,10 +2,10 @@ import { Schema, model, Document } from 'mongoose';
 import Card from './card.js';
 
 // Define an interface for the Thought document
-interface IDeck extends Document {
+export interface IDeck extends Document {
 name: string;
 playable: boolean;
-cards: Array<typeof Card>;
+cards?: Schema.Types.ObjectId;
 type: string;
 user: Schema.Types.ObjectId;
 }
@@ -16,16 +16,20 @@ const deckSchema = new Schema<IDeck>(
             type: String,
             required: true,
             trim: true,
+            unique: true,
         },
         playable:{
             type: Boolean,
             required: true,
         },
-        cards: [Card],
+        cards: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Card',
+          }],
         type:{
             type: String,
             required: true,
-            enum:['main', 'side', 'extra']
+            enum:['main', 'side', 'extra', 'draft']
         },
         user:{
             type: Schema.Types.ObjectId,
@@ -34,6 +38,6 @@ const deckSchema = new Schema<IDeck>(
     },
 )
 
-const Deck = model<IDeck>('Deck', deckSchema);
+const Deck = model('Deck', deckSchema);
 
 export default Deck;
