@@ -4,7 +4,7 @@ import Card from './card.js';
 import Deck from './deck.js';
 
 // note: mongoose automatically adds ID
-interface IUser extends Document {
+export interface IUser extends Document {
     username: string;
     email: string;
     password: string;
@@ -55,6 +55,6 @@ userSchema.methods.isCorrectPassword = async function (password: string): Promis
     return bcrypt.compare(password, this.password);
 };
 
-const User = model<IUser>('User', userSchema);
+const User = model('User', userSchema);
 
 export default User;

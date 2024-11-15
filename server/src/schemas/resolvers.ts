@@ -26,6 +26,27 @@ interface CardArg {
     cardId: string;
 }
 
+interface AddCardToDeckArg {
+    deckId: string;
+    cardId: string;
+}
+
+interface AddCardArg {
+    input: {
+        apiId: Number
+        name: String
+        type: string
+        description: String
+        attack: Number
+        defense: Number
+        level: Number
+        attribute: String
+        race: String
+        archetype: String
+        image: String
+    }
+}
+
 interface DeckArg {
     deckId: string;
 }
@@ -50,10 +71,10 @@ const resolvers = {
             return Deck.find({});
         },
         cardById: async (_parent: any, { cardId }: CardArg) => {
-            return await Card.findOne({_id: cardId});
+            return await Card.findOne({ _id: cardId });
         },
         deckById: async (_parent: any, { deckId }: DeckArg) => {
-            return await Deck.findOne({_id: deckId});
+            return await Deck.findOne({ _id: deckId });
         },
     },
     Mutation: {
@@ -91,6 +112,38 @@ const resolvers = {
             // Return the token and the user
             return { token, user };
         },
+        addCardToUser: async(_parent: any, { input }:AddCardArg, context: any ) => {
+            if (context.user) {
+                const newCard = await Card.create({ ...input });
+        
+                await User.findOneAndUpdate(
+                  { _id: context.user._id },
+                  { $addToSet: { savedCards: newCard } }
+                );
+        
+                return newCard;
+              }
+              throw AuthenticationError;
+              ('You need to be logged in!');
+        },
+        // ToDo: add context for logged in user
+        // addCardToDeck: async(_parent: any, {cardId, deckId}:AddCardToDeckArg, context: any) => {
+        //         const cardToAdd = Card.findById(cardId);
+                
+        //         return Deck.findOneAndUpdate(
+        //           { _id: deckId },
+        //           {
+        //             $addToSet: {
+        //                 cards: cardToAdd,
+        //             },
+        //           },
+        //           {
+        //             new: true,
+        //             runValidators: true,
+        //           }
+        //         );
+        //       }
+
     }
 }
 
