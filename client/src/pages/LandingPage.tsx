@@ -21,7 +21,7 @@ import { saveCardIds, getSavedCardIds } from '../utils/localStorage';
 const LandingPage = () => {
     const [searchedCards, setSearchedCards] = useState<Cards[]>([]);
 
-    const [searchInput, setSearchInput] = useState('Baby Dragon')
+    const [searchInput, setSearchInput] = useState('')
     const [dropInput, setDropInput] = useState('fname');
     const [savedCardIds, setSavedCardIds] = useState(getSavedCardIds());
     const [currentPage, setCurrentPage] = useState(0);
@@ -152,14 +152,14 @@ const LandingPage = () => {
                                     onChange={(e) => setSearchInput(e.target.value)}
                                     type='text'
                                     size='lg'
-                                    placeholder='Enter Card Name'
+                                    placeholder='Enter Keyword'
                                 />
                                 <Form.Control
                                     as='select'
                                     value={dropInput}
                                     onChange={(e) => setDropInput(e.target.value)}
                                 >
-                                    <option value='fname'>Search by Card Name (e.g. Dark Magician)</option>
+                                    <option value='fname'>Search by Card Name (e.g. Dark Magician, Baby Dragon, Time Wizard)</option>
                                     <option value='type'>Search by Type (e.g. Normal Monster, Effect Monster, Synchro Monster, Spell Card)</option>
                                     <option value='race'>Search by Race (e.g. Spellcaster, Warrior, Insect)</option>
                                     <option value='attribute'>Search by Attribute (e.g. Dark, Divine, Fire, Light, Earth)</option>
@@ -192,11 +192,11 @@ const LandingPage = () => {
                                         <Card.Img src={card.image} alt={`Art for ${card.name}`} variant='top' />
                                     ) : null}
                                     <Card.Body>
-                                        <Card.Text>{card.name} {card.attribute}</Card.Text>
-                                        <Card.Text>Level: {card.level}</Card.Text>
-                                        <Card.Text>{card.race}/{card.type}</Card.Text>
+                                        <Card.Text>{card.name}</Card.Text>
+                                        <Card.Text>ATR: {card.attribute} | Level: {card.level}</Card.Text>
+                                        <Card.Text>[{card.race} / {card.type}]</Card.Text>
                                         <Card.Text>{card.description}</Card.Text>
-                                        <Card.Text>ATK: {card.atk} DEF: {card.def}</Card.Text>
+                                        <Card.Text>ATK: {card.atk} | DEF: {card.def}</Card.Text>
                                         {Auth.loggedIn() && (
                                             <Button
                                                 disabled={savedCardIds?.some((savedCardId: string) => savedCardId === card.name)}
