@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import App from './App'
 import LandingPage from './pages/LandingPage'
-
+import UserPage from './pages/UserPage'
 const router = createBrowserRouter([
     {
         path: '/',
@@ -15,8 +15,8 @@ const router = createBrowserRouter([
                 index: true,
                 element: <LandingPage />
             }, {
-                // path: '/MyDecks',
-                // element: <MyDecks />
+                path: '/UserPage',
+                element: <UserPage />
             }
         ]
     }
