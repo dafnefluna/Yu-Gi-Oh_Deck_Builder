@@ -4,10 +4,12 @@ import { Schema, model, Document } from 'mongoose';
 export interface IDeck extends Document {
     name: string;
     playable: boolean;
-    cards?: Schema.Types.ObjectId;
+    cards?: Schema.Types.ObjectId[];
     type: string;
     user: Schema.Types.ObjectId;
 }
+
+// note to ask: do we change cards? into an array of schema.types.... 11/17
 
 const deckSchema = new Schema<IDeck>(
     {
