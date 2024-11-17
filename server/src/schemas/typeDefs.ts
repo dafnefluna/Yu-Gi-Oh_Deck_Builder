@@ -46,6 +46,7 @@ const typeDefs = gql`
 
     type Deck {
         _id: ID
+        name: String
         playable: Boolean
         cards?: [String]
         type: String
@@ -53,6 +54,7 @@ const typeDefs = gql`
     }
 
     input DeckInput {
+        name: String
         playable: Boolean
         cards?: [String]
         type: String
@@ -91,8 +93,7 @@ const typeDefs = gql`
         # deleteCardFromUser(cardId: String!): Card
         deleteCardFromDeck(deckId: String!, cardId: String!): Deck
         # deleteDeck(deckId: String!): Deck
-        updateDeckName(deckId: String!): Deck
+        updateDeck(deckId: String!, input: DeckInput): Deck
     }
 `
 export default typeDefs;
-// todo: need at least one delete, pick one, and if time, can do the rest

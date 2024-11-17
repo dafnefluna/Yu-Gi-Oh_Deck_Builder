@@ -26,4 +26,4 @@ export const ADD_USER = gql`
 
 export const searchYuGiOhCard = (cardProperty: string, cardInfo: string) => {
     return fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?${cardProperty}=${cardInfo}`);
-  };
+};
