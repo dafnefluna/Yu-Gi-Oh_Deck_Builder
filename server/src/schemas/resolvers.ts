@@ -33,22 +33,46 @@ interface AddCardToDeckArg {
 
 interface AddCardArg {
     input: {
-        apiId: Number
-        name: String
+        apiId: number
+        name: string
         type: string
-        description: String
-        attack: Number
-        defense: Number
-        level: Number
-        attribute: String
-        race: String
-        archetype: String
-        image: String
+        description: string
+        attack: number
+        defense: number
+        level: number
+        attribute: string
+        race: string
+        archetype: string
+        image: string
     }
 }
 
 interface DeckArg {
     deckId: string;
+}
+
+interface AddDeckArg {
+    input: {
+        name: string
+        playable: boolean
+        cards?: [string]
+        type: string
+        user: string
+    }
+}
+
+interface DeleteCardFromDeckArg {
+    deckId: string
+    cardId: string
+}
+
+interface updateDeckArg {
+    deckId: string
+    input: {
+        name: string
+        playable: boolean
+        type: string
+    }
 }
 
 const resolvers = {
@@ -68,7 +92,7 @@ const resolvers = {
             return Card.find({});
         },
         allDecks: async (): Promise<IDeck[] | null> => {
-            return Deck.find({});
+            return Deck.find({}).populate("cards");
         },
         cardById: async (_parent: any, { cardId }: CardArg) => {
             return await Card.findOne({ _id: cardId });
@@ -112,38 +136,74 @@ const resolvers = {
             // Return the token and the user
             return { token, user };
         },
-        addCardToUser: async(_parent: any, { input }:AddCardArg, context: any ) => {
+
+        addCardToUser: async (_parent: any, { input }: AddCardArg, context: any) => {
             if (context.user) {
                 const newCard = await Card.create({ ...input });
-        
-                await User.findOneAndUpdate(
-                  { _id: context.user._id },
-                  { $addToSet: { savedCards: newCard } }
-                );
-        
-                return newCard;
-              }
-              throw AuthenticationError;
-              ('You need to be logged in!');
-        },
-        // ToDo: add context for logged in user
-        // addCardToDeck: async(_parent: any, {cardId, deckId}:AddCardToDeckArg, context: any) => {
-        //         const cardToAdd = Card.findById(cardId);
-                
-        //         return Deck.findOneAndUpdate(
-        //           { _id: deckId },
-        //           {
-        //             $addToSet: {
-        //                 cards: cardToAdd,
-        //             },
-        //           },
-        //           {
-        //             new: true,
-        //             runValidators: true,
-        //           }
-        //         );
-        //       }
 
+                await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $addToSet: { savedCards: newCard } }
+                );
+
+                return newCard;
+            }
+            throw AuthenticationError;
+            ('You need to be logged in!');
+        },
+
+        addCardToDeck: async (_parent: any, { cardId, deckId }: AddCardToDeckArg, context: any) => {
+            if (context.user) {
+                const cardToAdd = Card.findById(cardId);
+
+                await Deck.findOneAndUpdate(
+                    { _id: deckId },
+                    { $addToSet: { cards: cardToAdd, } },
+                    { new: true, runValidators: true }
+                );
+                return cardToAdd;
+            }
+            throw AuthenticationError;
+            ('You need to be logged in!');
+        },
+
+        createDeck: async (_parent: any, { input }: AddDeckArg, context: any) => {
+            if (context.user) {
+                const createNewDeck = Deck.create({ ...input });
+
+                await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $addToSet: { allDecks: createNewDeck } }
+                );
+                return createNewDeck;
+            }
+            throw AuthenticationError;
+            ('You need to be logged in!');
+        },
+
+        deleteCardFromDeck: async (_parent: any, { deckId, cardId }: DeleteCardFromDeckArg, context: any) => {
+            if (context.user) {
+                return Deck.findOneAndUpdate(
+                    { _id: deckId },
+                    {
+                        $pull: { cards: { _id: cardId } }
+                    },
+                    { new: true });
+            }
+            throw AuthenticationError;
+            ('You need to be logged in!');
+        },
+
+        updateDeckName: async (_parent: any, { deckId, input }: updateDeckArg, context: any) => {
+            if (context.user) {
+                return Deck.findOneAndUpdate(
+                    { _id: deckId },
+                    { name: input.name, playable: input.playable, type: input.type },
+                    { new: true });
+            }
+            throw AuthenticationError;
+            ('You need to be logged in!');
+        },
     }
 }
 
