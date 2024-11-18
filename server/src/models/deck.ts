@@ -1,37 +1,37 @@
 import { Schema, model, Document } from 'mongoose';
-import Card from './card.js';
 
 // Define an interface for the Thought document
 export interface IDeck extends Document {
-name: string;
-playable: boolean;
-cards?: Schema.Types.ObjectId;
-type: string;
-user: Schema.Types.ObjectId;
+    name: string;
+    playable: boolean;
+    cards?: Schema.Types.ObjectId[];
+    type: string;
+    user: Schema.Types.ObjectId;
 }
+
+// note to ask: do we change cards? into an array of schema.types.... 11/17
 
 const deckSchema = new Schema<IDeck>(
     {
-        name:{
+        name: {
             type: String,
             required: true,
             trim: true,
             unique: true,
         },
-        playable:{
+        playable: {
             type: Boolean,
             required: true,
         },
         cards: [{
             type: Schema.Types.ObjectId,
-            ref: 'Card',
-          }],
-        type:{
+            ref: 'Card'}],
+        type: {
             type: String,
             required: true,
-            enum:['main', 'side', 'extra', 'draft']
+            enum: ['main', 'side', 'extra', 'draft']
         },
-        user:{
+        user: {
             type: Schema.Types.ObjectId,
             ref: 'User',
         },

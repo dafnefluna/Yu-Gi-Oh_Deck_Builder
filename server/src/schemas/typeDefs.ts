@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 // the typedefs are replacing our routes and the resolver is our controllers
 // note: when we get to the end in type User, think about removing password for security purposes if nothing break
 // the arrays are referring the types in
-
+// todo: double check the cardId/deckId vs _id in the backend ask TA 11/17
 
 const typeDefs = gql`
     type User {
@@ -46,6 +46,7 @@ const typeDefs = gql`
 
     type Deck {
         _id: ID
+        name: String
         playable: Boolean
         cards?: [String]
         type: String
@@ -53,6 +54,7 @@ const typeDefs = gql`
     }
 
     input DeckInput {
+        name: String
         playable: Boolean
         cards?: [String]
         type: String
@@ -70,7 +72,7 @@ const typeDefs = gql`
         user: User
     }
 
-
+# do we use card id instead _id in the quearies in the front end
     type Query {
         allCards: [Card]
         allDecks: [Deck]
@@ -91,8 +93,7 @@ const typeDefs = gql`
         # deleteCardFromUser(cardId: String!): Card
         deleteCardFromDeck(deckId: String!, cardId: String!): Deck
         # deleteDeck(deckId: String!): Deck
-        updateDeckName(deckId: String!): Deck
+        updateDeck(deckId: String!, input: DeckInput): Deck
     }
 `
 export default typeDefs;
-// todo: need at least one delete, pick one, and if time, can do the rest
