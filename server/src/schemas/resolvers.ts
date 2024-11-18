@@ -152,13 +152,14 @@ const resolvers = {
             ('You need to be logged in!');
         },
 
+// note: we switched to $push from $addtoset to have duplicates cards in their deck. For v2 we should consider add to set when we figure out the authenticating the card that exist irl
         addCardToDeck: async (_parent: any, { cardId, deckId }: AddCardToDeckArg, context: any) => {
             if (context.user) {
                 const cardToAdd = Card.findById(cardId);
 
                 await Deck.findOneAndUpdate(
                     { _id: deckId },
-                    { $addToSet: { cards: cardToAdd, } },
+                    { $push: { cards: cardToAdd, } },
                     { new: true, runValidators: true }
                 );
                 return cardToAdd;
