@@ -48,7 +48,7 @@ const typeDefs = gql`
         _id: ID
         name: String
         playable: Boolean
-        cards?: [String]
+        cards: [String]
         type: String
         user: String!
     }
@@ -56,7 +56,7 @@ const typeDefs = gql`
     input DeckInput {
         name: String
         playable: Boolean
-        cards?: [String]
+        cards: [String]
         type: String
         user: String!
     }

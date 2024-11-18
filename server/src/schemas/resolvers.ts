@@ -55,7 +55,7 @@ interface AddDeckArg {
     input: {
         name: string
         playable: boolean
-        cards?: [string]
+        cards: [string]
         type: string
         user: string
     }
