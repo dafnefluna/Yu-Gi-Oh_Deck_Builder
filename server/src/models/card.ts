@@ -65,6 +65,6 @@ const cardSchema = new Schema<ICard>(
     },
 )
 
-const Card = model('Card', cardSchema);
+const Card = model<ICard>('Card', cardSchema);
 
 export default Card;
