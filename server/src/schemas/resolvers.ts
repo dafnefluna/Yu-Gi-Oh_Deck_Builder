@@ -78,12 +78,12 @@ interface updateDeckArg {
 const resolvers = {
     Query: {
         user: async (_parent: any, { username }: UserArgs): Promise<IUser | null> => {
-            return User.findOne({ username });
+            return User.findOne({ username }).populate("savedCards").populate("allDecks");
         },
         me: async (_parent: any, _args: any, context: any) => {
             // If the user is authenticated, find and return the user's information
             if (context.user) {
-                return User.findOne({ _id: context.user._id });
+                return User.findOne({ _id: context.user._id }).populate("savedCards").populate("allDecks");
             }
             // If the user is not authenticated, throw an AuthenticationError
             throw new AuthenticationError('Could not authenticate user.');
@@ -98,7 +98,7 @@ const resolvers = {
             return await Card.findOne({ _id: cardId });
         },
         deckById: async (_parent: any, { deckId }: DeckArg) => {
-            return await Deck.findOne({ _id: deckId });
+            return await Deck.findOne({ _id: deckId }).populate("cards");
         },
     },
     Mutation: {
@@ -152,13 +152,14 @@ const resolvers = {
             ('You need to be logged in!');
         },
 
+// note: we switched to $push from $addtoset to have duplicates cards in their deck. For v2 we should consider add to set when we figure out the authenticating the card that exist irl
         addCardToDeck: async (_parent: any, { cardId, deckId }: AddCardToDeckArg, context: any) => {
             if (context.user) {
                 const cardToAdd = Card.findById(cardId);
 
                 await Deck.findOneAndUpdate(
                     { _id: deckId },
-                    { $addToSet: { cards: cardToAdd, } },
+                    { $push: { cards: cardToAdd, } },
                     { new: true, runValidators: true }
                 );
                 return cardToAdd;
