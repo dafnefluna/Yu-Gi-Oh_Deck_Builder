@@ -64,7 +64,7 @@ export const CREATE_NEW_DECK = gql `
             _id
             name
             playable
-            cards?
+            cards
             type
         }
     }
@@ -75,7 +75,7 @@ export const REMOVE_CARD_FROM_DECK = gql `
         removeCardFromDeck (deckId: $deckId, cardId: $cardId) {
             name
             playable
-            cards?
+            cards
             type
         }
     }
@@ -86,7 +86,7 @@ export const UPDATE_DECK_DETAILS = gql `
         updateDeckDetails (deckId: $deckId, input: $input) {
             name
             playable
-            cards?
+            cards
             type
         }
     }
