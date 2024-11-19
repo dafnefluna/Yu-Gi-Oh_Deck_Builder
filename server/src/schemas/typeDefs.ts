@@ -17,13 +17,13 @@ const typeDefs = gql`
 
     type Card {
         _id: ID
-        apiId: Number
+        apiId: Int
         name: String
-        type: string
+        type: String
         description: String
-        attack: Number
-        defense: Number
-        level: Number
+        attack: Int
+        defense: Int
+        level: Int
         attribute: String
         race: String
         archetype: String
@@ -31,13 +31,13 @@ const typeDefs = gql`
     }
 
     input CardInput{
-        apiId: Number
+        apiId: Int
         name: String
-        type: string
+        type: String
         description: String
-        attack: Number
-        defense: Number
-        level: Number
+        attack: Int
+        defense: Int
+        level: Int
         attribute: String
         race: String
         archetype: String
@@ -48,7 +48,7 @@ const typeDefs = gql`
         _id: ID
         name: String
         playable: Boolean
-        cards?: [String]
+        cards: [String]
         type: String
         user: String!
     }
@@ -56,7 +56,7 @@ const typeDefs = gql`
     input DeckInput {
         name: String
         playable: Boolean
-        cards?: [String]
+        cards: [String]
         type: String
         user: String!
     }
@@ -93,7 +93,7 @@ const typeDefs = gql`
         # deleteCardFromUser(cardId: String!): Card
         deleteCardFromDeck(deckId: String!, cardId: String!): Deck
         # deleteDeck(deckId: String!): Deck
-        updateDeck(deckId: String!, input: DeckInput): Deck
+        updateDeckName(deckId: String!, input: DeckInput): Deck
     }
 `
 export default typeDefs;
