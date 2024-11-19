@@ -34,7 +34,7 @@ const startApolloServer = async () => {
 // 11.18 note: took away __dirname, added express.static
 
   // if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(process.cwd(), '../client/dist/index.html')));
+    app.use(express.static(path.join(process.cwd(), '../client/dist/')));
 
     app.get('*', (_req: Request, res: Response) => {
       res.sendFile(path.join(process.cwd(), '../client/dist/index.html'));
