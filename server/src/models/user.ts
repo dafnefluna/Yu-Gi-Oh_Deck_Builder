@@ -1,15 +1,15 @@
 import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
-import Card from './card.js';
-import Deck from './deck.js';
+// import Card from './card.js';
+// import Deck from './deck.js';
 
 // note: mongoose automatically adds ID
 export interface IUser extends Document {
     username: string;
     email: string;
     password: string;
-    savedCards: Array<typeof Card>;
-    allDecks?: Array<typeof Deck>;
+    savedCards: Schema.Types.ObjectId[];
+    allDecks?: Schema.Types.ObjectId[];
     isCorrectPassword(password: string): Promise<boolean>;
 }
 
@@ -32,8 +32,19 @@ const userSchema = new Schema<IUser>(
             required: true,
             minlength: 5,
         },
-        savedCards: [Card],
-        allDecks: [Deck],
+        savedCards: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Card',
+            },
+        ],
+        allDecks: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Deck'
+            }
+
+        ],
     },
     {
         timestamps: true,
