@@ -31,14 +31,15 @@ const startApolloServer = async () => {
   ));
 
 // note: might revisit the __dirname at render bc picky
+// 11.18 note: took away __dirname, added express.static
 
-  if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('../client/dist'));
+  // if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(process.cwd(), '../client/dist/index.html')));
 
     app.get('*', (_req: Request, res: Response) => {
       res.sendFile(path.join(process.cwd(), '../client/dist/index.html'));
     });
-  }
+  // }
 
   app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}!`);
