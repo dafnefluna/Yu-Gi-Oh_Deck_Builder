@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/dist/server.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "cd server && node server/server.js",
     "start:dev": "concurrently \"cd server && npm run watch\" \"wait-on tcp:3001 && cd client && npm run dev\"",
     "server": "cd server && npm start",
     "server:dev": "cd server && npm run dev",
@@ -15,7 +15,7 @@
     "build": "concurrently \"cd server && npm run build\" \"cd client && npm run build\"",
     "render-build": "npm install && npm run build",
     "set-up": "npm install && npm run build && npm run seed && npm run start:dev",
-    "lint": "eslint src --ext js,tsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "cd client && npm run lint"
   },
   "author": "",
   "license": "ISC",
