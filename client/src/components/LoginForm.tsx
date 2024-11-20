@@ -4,7 +4,7 @@ import Auth from '../utils/auth';
 import type { UserData } from '../interfaces/UserData';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
-
+// eslint-disable-next-line no-empty-pattern
 const LoginForm = ({}: { handleModalClose: () => void }) => {
     const [userFormData, setUserFormData] = useState<UserData>({
         username: '', email: '', password: ''});
