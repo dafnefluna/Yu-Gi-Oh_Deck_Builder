@@ -48,7 +48,7 @@ const typeDefs = gql`
         _id: ID
         name: String
         playable: Boolean
-        cards: [String]
+        cards: [Card]
         type: String
         user: String!
     }
@@ -91,7 +91,7 @@ const typeDefs = gql`
         addCardToDeck(deckId: String!, cardId: String!): Deck
         createDeck(input: DeckInput): Deck
         # deleteCardFromUser(cardId: String!): Card
-        deleteCardFromDeck(deckId: String!, cardId: String!): Deck
+        deleteCardFromDeck(deckId: ID!, cardId: ID!): Deck
         # deleteDeck(deckId: String!): Deck
         updateDeckName(deckId: String!, input: DeckInput): Deck
     }
