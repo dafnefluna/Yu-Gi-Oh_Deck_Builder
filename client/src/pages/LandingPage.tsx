@@ -210,7 +210,6 @@ const LandingPage = () => {
                                         )}
                                     </Card.Body>
                                 </Card>
-
                             </Col>
                         );
                     })}
