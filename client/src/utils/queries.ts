@@ -4,65 +4,70 @@ import { gql } from '@apollo/client';
 // note: mindful that we may need to change _id to cardId and deckId 11/17
 
 export const QUERY_USER = gql`
-    query user($username: String!) {
-        user(username: $username) {
-        _id
-        username
-        email
-        savedCards [{
-            _id
-            apiId
-            name
-            type
-            description
-            attack
-            defense
-            level
-            attribute
-            race
-            archetype
-            image
-            }]
-        allDecks [{
-            _id
-            name
-            playable
-            cards
-            type
-        }]
-        }
+    query User($username: String!) {
+  user(username: $username) {
+    _id
+    username
+    email
+    savedCards {
+      _id
+      apiId
+      name
+      type
+      description
+      attack
+      defense
+      level
+      attribute
+      race
+      archetype
+      image
     }
+    allDecks {
+      _id
+      name
+      playable
+      cards {
+        _id
+      }
+      type
+      user
+    }
+  }
+}
 `;
 
 export const QUERY_ME = gql`
-    query me {
-        me {
+    query Me {
+  me {
+    _id
+    username
+    email
+    savedCards {
+      _id
+      apiId
+      name
+      type
+      description
+      attack
+      defense
+      level
+      attribute
+      race
+      archetype
+      image
+    }
+    allDecks {
+      _id
+      name
+      playable
+      cards {
         _id
-        username
-        email
-        savedCards [{
-            _id
-            apiId
-            name
-            type
-            description
-            attack
-            defense
-            level
-            attribute
-            race
-            archetype
-            image
-            }]
-        allDecks [{
-            _id
-            name
-            playable
-            cards
-            type
-        }]
-        }
-    }`;
+      }
+      type
+    }
+  }
+}`;
 
 export const QUERY_GETALLCARDS =  gql `
     query AllCards {
