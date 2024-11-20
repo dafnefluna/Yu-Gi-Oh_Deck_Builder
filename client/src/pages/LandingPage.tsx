@@ -16,6 +16,7 @@ import { searchYuGiOhCard } from '../utils/mutations';
 import type { YuGiOhCard } from '../interfaces/YuGiOhAPISearch';
 import Auth from '../utils/auth';
 import { saveCardIds, getSavedCardIds } from '../utils/localStorage';
+import CardToDeck from '../components/CardToDeck.js';
 
 
 const LandingPage = () => {
@@ -209,6 +210,7 @@ const LandingPage = () => {
                                         )}
                                     </Card.Body>
                                 </Card>
+                                <CardToDeck cardId={card.id}></CardToDeck>
                             </Col>
                         );
                     })}
