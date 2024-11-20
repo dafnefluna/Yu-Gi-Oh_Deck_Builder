@@ -7,15 +7,16 @@ import {
     Col,
     Form,
     Button,
-    Card,
     Row
 } from 'react-bootstrap';
 
+import Pagination from '../components/Pagination';
 import type { Cards } from '../interfaces/Card'
 import { searchYuGiOhCard } from '../utils/mutations';
 import type { YuGiOhCard } from '../interfaces/YuGiOhAPISearch';
 import Auth from '../utils/auth';
 import { saveCardIds, getSavedCardIds } from '../utils/localStorage';
+import CardList from '../components/CardLayout';
 
 const SearchPage = () => {
     const [searchedCards, setSearchedCards] = useState<Cards[]>([]);
@@ -82,6 +83,8 @@ const SearchPage = () => {
         }
     };
 
+
+    /*Pagination variables*/
     const lastIndex = currentPage * cardsPerPage;
     const firstIndex = lastIndex - cardsPerPage;
 
@@ -100,6 +103,9 @@ const SearchPage = () => {
             setCurrentPage(currentPage + 1);
         }
     }
+    //
+
+
 
     // const downloadCardImage = async (url: string, filename: string) => {
     //     try {
@@ -182,51 +188,15 @@ const SearchPage = () => {
                         ? `Viewing ${searchedCards.length} results:`
                         : 'Search for a card to begin'}
                 </h2>
-                <Row>
-                    {currentCards.map((card) => {
-                        return (
-                            <Col md="4" key={card.name}>
-                                <Card border='dark'>
-                                    {card.image ? (
-                                        <Card.Img src={card.image} alt={`Art for ${card.name}`} variant='top' />
-                                    ) : null}
-                                    <Card.Body>
-                                        <Card.Text>{card.name}</Card.Text>
-                                        <Card.Text>ATR: {card.attribute} | Level: {card.level}</Card.Text>
-                                        <Card.Text>[{card.race} / {card.type}]</Card.Text>
-                                        <Card.Text>{card.description}</Card.Text>
-                                        <Card.Text>ATK: {card.atk} | DEF: {card.def}</Card.Text>
-                                        {Auth.loggedIn() && (
-                                            <Button
-                                                disabled={savedCardIds?.some((savedCardId: string) => savedCardId === card.name)}
-                                                className='btn-block btn-info'
-                                                onClick={() => handleSaveCard(card.name)}>
-                                                {savedCardIds?.some((savedCardId: string) => savedCardId === card.name)
-                                                    ? 'This card has already been saved!'
-                                                    : 'Save this Card!'}
-                                            </Button>
-                                        )}
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        );
-                    })}
-                </Row>
+                
+                <CardList cards = {currentCards} savedCardIds = {savedCardIds} handleSaveCard = {handleSaveCard} />
 
-                <Row>
-                    <div>
-                        {searchedCards.length > 0 && (
-                            <div>
-                                <button onClick={prevPage} disabled={currentPage === 1}>
-                                    Previous
-                                </button>
-                                <button onClick={nextPage} disabled={currentPage === totalPages}>
-                                    Next
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                </Row>
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages = {totalPages}
+                    prevPage = {prevPage}
+                    nextPage = {nextPage}
+                />
             </Container>
         </>
     );
