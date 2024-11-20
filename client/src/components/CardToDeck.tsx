@@ -13,7 +13,7 @@ import { QUERY_GETSINGLECARD } from '../utils/queries.js';
 const CardtoDeck: React.FC<{cardId: string}> = ({ cardId }) => {
     // establish state for the card data
     const [cardData, setCardData] = useState<Cards | null>(null);
-    const [deckData, set DeckData] = useState<
+    // const [deckData, setDeckData] = useState<
     // do the above for deckdata and create an interface
 
     // establish useQuery for card with id
