@@ -2,33 +2,33 @@ import { gql } from '@apollo/client';
 
 export const LOGIN_USER = gql`
     mutation Login($username: String!, $password: String!) {
-  login(username: $username, password: $password) {
+    login(username: $username, password: $password) {
     token
     user {
-      _id
-      username
-      email
+        _id
+        username
+        email
     }
-  }
+    }
 }
 `;
 
 // todo: where is theUserInput coming from? 11/17
 export const ADD_USER = gql`
     mutation AddUser($input: UserInput!) {
-  addUser(input: $input) {
+    addUser(input: $input) {
     token
     user {
-      _id
-      username
-      email
+        _id
+        sername
+        email
     }
-  }
+    }
 }
 `;
 
 // todo: do we add the _id or not. Maybe not bc its the solution the problem
-export const SAVE_NEW_CARD = gql `
+export const SAVE_NEW_CARD = gql`
     mutation addCardToUser($input: CardInput!) {
         saveNewCard(input: $input) {
             _id
@@ -47,7 +47,8 @@ export const SAVE_NEW_CARD = gql `
     }
 `;
 
-export const ADD_CARD_TO_DECK = gql `
+// 11/19 Note: this looks funny
+export const ADD_CARD_TO_DECK = gql`
     mutation addCardToDeck ($deckId: string!, $cardId: string!) {
         addCardToDeck(deckId: $deckId, cardId: $cardId) {
             name
@@ -58,7 +59,7 @@ export const ADD_CARD_TO_DECK = gql `
     }
 `;
 
-export const CREATE_NEW_DECK = gql `
+export const CREATE_NEW_DECK = gql`
     mutation createDeck ($input: DeckInput!) {
         createNewDeck(input: $input)  {
             _id
@@ -70,7 +71,7 @@ export const CREATE_NEW_DECK = gql `
     }
 `;
 
-export const REMOVE_CARD_FROM_DECK = gql `
+export const REMOVE_CARD_FROM_DECK = gql`
     mutation deleteCardFromDeck ($deckId: String!, $cardId: String!) {
         removeCardFromDeck (deckId: $deckId, cardId: $cardId) {
             name
@@ -81,7 +82,7 @@ export const REMOVE_CARD_FROM_DECK = gql `
     }
 `;
 
-export const UPDATE_DECK_DETAILS = gql `
+export const UPDATE_DECK_DETAILS = gql`
     mutation updateDeckName ($deckId: String!, $input: DeckInput!) {
         updateDeckDetails (deckId: $deckId, input: $input) {
             name

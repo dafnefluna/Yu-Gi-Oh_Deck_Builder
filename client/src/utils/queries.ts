@@ -84,7 +84,7 @@ export const QUERY_GETALLCARDS =  gql `
 `;
 
 export const QUERY_GETALLDECKS = gql `
-    query getAllDecks {
+    query allDecks {
         deck [{
             _id
             name
@@ -96,7 +96,7 @@ export const QUERY_GETALLDECKS = gql `
 `;
 
 export const  QUERY_GETSINGLECARD = gql `
-    query getSingleCard(cardId: ID!) {
+    query cardById(cardId: ID!) {
         card(cardId: $cardId) {
             _id
             apiId
