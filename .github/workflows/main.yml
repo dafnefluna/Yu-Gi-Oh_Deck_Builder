@@ -31,9 +31,5 @@ jobs:
 
       # Run lint
       - name: Run lint
-<<<<<<< HEAD
-        run: npm run lint
-=======
         run: npm run lint
         
->>>>>>> b015c2ca773b70533f4ef0ee02d2120006e30455
