@@ -71,16 +71,16 @@ export const CREATE_NEW_DECK = gql `
 }
 `;
 
-export const REMOVE_CARD_FROM_DECK = gql`
-    mutation deleteCardFromDeck ($deckId: String!, $cardId: String!) {
-        removeCardFromDeck (deckId: $deckId, cardId: $cardId) {
-            name
-            playable
-            cards
-            type
-        }
-    }
-`;
+// export const REMOVE_CARD_FROM_DECK = gql `
+//     mutation deleteCardFromDeck ($deckId: String!, $cardId: String!) {
+//         removeCardFromDeck (deckId: $deckId, cardId: $cardId) {
+//             name
+//             playable
+//             cards
+//             type
+//         }
+//     }
+// `;
 
 export const UPDATE_DECK_DETAILS = gql `
     mutation UpdateDeckName($deckId: String!, $input: DeckInput) {

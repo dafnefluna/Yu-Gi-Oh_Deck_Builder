@@ -65,63 +65,89 @@ export const QUERY_ME = gql`
     }`;
 
 export const QUERY_GETALLCARDS =  gql `
-    query getAllCards {
-        card [{
-            _id
-            apiId
-            name
-            type
-            description
-            attack
-            defense
-            level
-            attribute
-            race
-            archetype
-            image
-            }]
-    }
+    query AllCards {
+  allCards {
+    _id
+    apiId
+    name
+    type
+    description
+    attack
+    defense
+    level
+    attribute
+    race
+    archetype
+    image
+  }
+}
 `;
 
 export const QUERY_GETALLDECKS = gql `
-    query allDecks {
-        deck [{
-            _id
-            name
-            playable
-            cards
-            type
-        }]
+query AllDecks {
+  allDecks {
+    _id
+    name
+    playable
+    cards {
+      _id
+      apiId
+      name
+      type
+      description
+      attack
+      defense
+      level
+      attribute
+      race
+      archetype
+      image
     }
+    type
+  }
+}
 `;
 
 export const  QUERY_GETSINGLECARD = gql `
-    query cardById(cardId: ID!) {
-        card(cardId: $cardId) {
-            _id
-            apiId
-            name
-            type
-            description
-            attack
-            defense
-            level
-            attribute
-            race
-            archetype
-            image
-            }
-    }
+   query CardById($cardId: ID!) {
+  cardById(cardId: $cardId) {
+    _id
+    apiId
+    name
+    type
+    description
+    attack
+    defense
+    level
+    attribute
+    race
+    archetype
+    image
+  }
+}
 `;
 
 export const QUERY_GETSINGLEDECK = gql `
-    query getSingleDeck(deckId: ID!) {
-        deck(deckId: $deckId) {
-            _id
-            name
-            playable
-            cards
-            type
-        }
+query DeckById($deckId: ID!) {
+  deckById(deckId: $deckId) {
+    _id
+    name
+    playable
+    cards {
+      _id
+      apiId
+      name
+      type
+      description
+      attack
+      defense
+      level
+      attribute
+      race
+      archetype
+      image
     }
+    type
+  }
+}
 `;
