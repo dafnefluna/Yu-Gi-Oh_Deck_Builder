@@ -29,45 +29,46 @@ export const ADD_USER = gql`
 
 // todo: do we add the _id or not. Maybe not bc its the solution the problem
 export const SAVE_NEW_CARD = gql `
-    mutation addCardToUser($input: CardInput!) {
-        saveNewCard(input: $input) {
-            _id
-            apiId
-            name
-            type
-            description
-            attack
-            defense
-            level
-            attribute
-            race
-            archetype
-            image
-        }
-    }
+    mutation AddCardToUser($input: CardInput) {
+  addCardToUser(input: $input) {
+    _id
+    apiId
+    name
+    type
+    description
+    attack
+    defense
+    level
+    attribute
+    race
+    archetype
+    image
+  }
+}
 `;
 
 export const ADD_CARD_TO_DECK = gql `
-    mutation addCardToDeck ($deckId: string!, $cardId: string!) {
-        addCardToDeck(deckId: $deckId, cardId: $cardId) {
-            name
-            playable
-            cards
-            type
-        }
-    }
+    mutation AddCardToDeck($deckId: String!, $cardId: String!) {
+  addCardToDeck(deckId: $deckId, cardId: $cardId) {
+    _id
+    name
+    playable
+    cards
+    type
+  }
+}
 `;
 
 export const CREATE_NEW_DECK = gql `
-    mutation createDeck ($input: DeckInput!) {
-        createNewDeck(input: $input)  {
-            _id
-            name
-            playable
-            cards
-            type
-        }
-    }
+    mutation CreateDeck($input: DeckInput) {
+  createDeck(input: $input) {
+    _id
+    name
+    playable
+    cards
+    type
+  }
+}
 `;
 
 export const REMOVE_CARD_FROM_DECK = gql `
@@ -82,14 +83,15 @@ export const REMOVE_CARD_FROM_DECK = gql `
 `;
 
 export const UPDATE_DECK_DETAILS = gql `
-    mutation updateDeckName ($deckId: String!, $input: DeckInput!) {
-        updateDeckDetails (deckId: $deckId, input: $input) {
-            name
-            playable
-            cards
-            type
-        }
-    }
+    mutation UpdateDeckName($deckId: String!, $input: DeckInput) {
+  updateDeckName(deckId: $deckId, input: $input) {
+    _id
+    name
+    playable
+    cards
+    type
+  }
+}
 `;
 
 export const searchYuGiOhCard = (cardProperty: string, cardInfo: string) => {
