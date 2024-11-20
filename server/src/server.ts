@@ -5,7 +5,7 @@ import db from './config/connection.js'
 import { ApolloServer } from '@apollo/server';// Note: Import from @apollo/server-express
 import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs, resolvers } from './schemas/index.js';
-// import { authenticateToken } from './utils/auth.js';
+import { authenticateToken } from './utils/auth.js';
 
 // note: bring back authentication token when we finish adding context to the front end
 
@@ -26,19 +26,20 @@ const startApolloServer = async () => {
 
   app.use('/graphql', expressMiddleware(server as any,
     {
-      // context: authenticateToken as any
+      context: authenticateToken as any
     }
   ));
 
 // note: might revisit the __dirname at render bc picky
+// 11.18 note: took away __dirname, added express.static
 
-  if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/dist')));
+  // if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(process.cwd(), '../client/dist/')));
 
     app.get('*', (_req: Request, res: Response) => {
-      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+      res.sendFile(path.join(process.cwd(), '../client/dist/index.html'));
     });
-  }
+  // }
 
   app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}!`);
