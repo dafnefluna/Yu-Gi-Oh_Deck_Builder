@@ -8,7 +8,7 @@ import { QUERY_GETALLDECKS, QUERY_GETSINGLECARD } from '../utils/queries.js';
 
 
 // this component is the functionality to be able to save a card from the user collection to a deck.
-// use <CardToDeck cardId={card.id}></CardToDeck> when I put this in another page or whatever and import
+// use <CardToDeck cardId={card.id, deck.id}></CardToDeck> when I put this in another page or whatever and import
 
 // 
 const CardtoDeck: React.FC<{ cardId: string, deckId: string }> = ({ cardId, deckId }) => {
