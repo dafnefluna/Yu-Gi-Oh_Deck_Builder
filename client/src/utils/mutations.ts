@@ -94,6 +94,39 @@ export const UPDATE_DECK_DETAILS = gql `
 }
 `;
 
+export const DELETE_CARD_FROM_USER = gql `
+mutation DeleteCardFromUser($cardId: ID!) {
+  deleteCardFromUser(cardId: $cardId) {
+    _id
+    username
+    email
+    savedCards {
+      _id
+      apiId
+      name
+      type
+      description
+      attack
+      defense
+      level
+      attribute
+      race
+      archetype
+      image
+    }
+    allDecks {
+      _id
+      name
+      playable
+      cards {
+        _id
+      }
+      type
+    }
+  }
+}
+`;
+
 export const searchYuGiOhCard = (cardProperty: string, cardInfo: string) => {
     return fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?${cardProperty}=${cardInfo}`);
 };

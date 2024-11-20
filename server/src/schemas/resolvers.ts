@@ -2,7 +2,7 @@ import { signToken, AuthenticationError } from '../utils/auth.js';
 import User, { IUser } from '../models/user.js';
 import Card, { ICard } from '../models/card.js';
 import Deck, { IDeck } from '../models/deck.js';
-import { Schema } from 'mongoose';
+// import { Schema } from 'mongoose';
 
 // todo: finish resolvers and copied the add user and login from activity 28
 interface AddUserArgs {
@@ -61,10 +61,10 @@ interface AddDeckArg {
     }
 }
 
-interface DeleteCardFromDeckArg {
-    deckId: Schema.Types.ObjectId
-    cardId: Schema.Types.ObjectId
-}
+// interface DeleteCardFromDeckArg {
+//     deckId: Schema.Types.ObjectId
+//     cardId: Schema.Types.ObjectId
+// }
 
 interface updateDeckArg {
     deckId: string
@@ -182,21 +182,21 @@ const resolvers = {
             ('You need to be logged in!');
         },
 
-        deleteCardFromDeck: async (_parent: any, { deckId, cardId }: DeleteCardFromDeckArg, context: any) => {
-            if (context.user) {
-                const deck = await Deck.findById(deckId);
-                    console.log(deck);
-                    if (deck) {
-                const cardIndex = deck.cards?.indexOf({ _id: cardId });
-                if (cardIndex) {
-                    deck.cards?.splice(cardIndex)
-                };
-                const updatedDeck = await deck.save();
-                return updatedDeck
-            }}
-            throw AuthenticationError;
-            ('You need to be logged in!');
-        },
+        // deleteCardFromDeck: async (_parent: any, { deckId, cardId }: DeleteCardFromDeckArg, context: any) => {
+        //     if (context.user) {
+        //         const deck = await Deck.findById(deckId);
+        //             console.log(deck);
+        //             if (deck) {
+        //         const cardIndex = deck.cards?.indexOf({ _id: cardId });
+        //         if (cardIndex) {
+        //             deck.cards?.splice(cardIndex)
+        //         };
+        //         const updatedDeck = await deck.save();
+        //         return updatedDeck
+        //     }}
+        //     throw AuthenticationError;
+        //     ('You need to be logged in!');
+        // },
 
         updateDeckName: async (_parent: any, { deckId, input }: updateDeckArg, context: any) => {
             if (context.user) {
@@ -204,6 +204,18 @@ const resolvers = {
                     { _id: deckId },
                     { name: input.name, playable: input.playable, type: input.type },
                     { new: true });
+            }
+            throw AuthenticationError;
+            ('You need to be logged in!');
+        },
+
+        deleteCardFromUser: async (_parent: any, { cardId }: CardArg, context: any) => {
+            if (context.user) {
+                await Card.findOneAndDelete({ _id: cardId });
+                return User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull:{ savedCards: cardId }},
+                    { new: true }).populate("savedCards").populate("allDecks");
             }
             throw AuthenticationError;
             ('You need to be logged in!');
