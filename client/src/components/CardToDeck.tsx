@@ -11,7 +11,9 @@ import { QUERY_GETALLDECKS, QUERY_GETSINGLECARD } from '../utils/queries.js';
 // use <CardToDeck cardId={card.id, deck.id}></CardToDeck> when I put this in another page or whatever and import
 
 // 
-const CardtoDeck: React.FC<{ cardId: string, deckId: string }> = ({ cardId, deckId }) => {
+
+// note: i removed deckId from the getallcard query because I want all decks
+const CardtoDeck: React.FC<{ cardId: string, deckId: string }> = ({ cardId}) => {
     // establish state for the card data
     const [cardData, setCardData] = useState<Cards | null>(null);
     const [deckData, setDeckData] = useState<Decks | null>(null);
@@ -22,9 +24,7 @@ const CardtoDeck: React.FC<{ cardId: string, deckId: string }> = ({ cardId, deck
         variables: { id: cardId },
     });
 
-    const { data: deckDataQuery, loading: deckLoading, error: deckError } = useQuery(QUERY_GETALLDECKS, {
-        variables: { id: deckId }
-    })
+    const { data: deckDataQuery, loading: deckLoading, error: deckError } = useQuery(QUERY_GETALLDECKS)
     // establish usemutation to get the addcardtodeck mutation
     const [addCardToDeckMutation] = useMutation(ADD_CARD_TO_DECK);
     const [addCardtoUserMutation] = useMutation(SAVE_NEW_CARD);
@@ -110,8 +110,8 @@ const CardtoDeck: React.FC<{ cardId: string, deckId: string }> = ({ cardId, deck
 
         return (
             <div>
-                <h1>{cardData?.name}</h1>
-                <h1>{deckData?.name}</h1>
+                {/* <h1>{cardData?.name}</h1>
+                <h1>{deckData?.name}</h1> */}
                 <ButtonGroup>
                     <DropdownButton as={ButtonGroup} title="Save Card" id="bg-nested-dropdown" onSelect={handleSelect}>
                         <Dropdown.Item eventKey="1">... To My Collection</Dropdown.Item>
