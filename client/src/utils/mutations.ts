@@ -2,28 +2,28 @@ import { gql } from '@apollo/client';
 
 export const LOGIN_USER = gql`
     mutation Login($username: String!, $password: String!) {
-  login(username: $username, password: $password) {
+    login(username: $username, password: $password) {
     token
     user {
-      _id
-      username
-      email
+        _id
+        username
+        email
     }
-  }
+    }
 }
 `;
 
 // todo: where is theUserInput coming from? 11/17
 export const ADD_USER = gql`
     mutation AddUser($input: UserInput!) {
-  addUser(input: $input) {
+    addUser(input: $input) {
     token
     user {
-      _id
-      username
-      email
+        _id
+        sername
+        email
     }
-  }
+    }
 }
 `;
 
@@ -90,6 +90,39 @@ export const UPDATE_DECK_DETAILS = gql `
     playable
     cards
     type
+  }
+}
+`;
+
+export const DELETE_CARD_FROM_USER = gql `
+mutation DeleteCardFromUser($cardId: ID!) {
+  deleteCardFromUser(cardId: $cardId) {
+    _id
+    username
+    email
+    savedCards {
+      _id
+      apiId
+      name
+      type
+      description
+      attack
+      defense
+      level
+      attribute
+      race
+      archetype
+      image
+    }
+    allDecks {
+      _id
+      name
+      playable
+      cards {
+        _id
+      }
+      type
+    }
   }
 }
 `;

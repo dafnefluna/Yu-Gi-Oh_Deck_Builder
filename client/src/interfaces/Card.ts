@@ -1,5 +1,5 @@
 export interface Cards {
-    id: BigInteger;
+    id: string;
     image: string;
     name: string;
     attribute: string;
