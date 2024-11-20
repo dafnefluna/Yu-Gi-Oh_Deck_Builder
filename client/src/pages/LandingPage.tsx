@@ -210,7 +210,7 @@ const LandingPage = () => {
                                         )}
                                     </Card.Body>
                                 </Card>
-                                <CardToDeck cardId={card.id}></CardToDeck>
+
                             </Col>
                         );
                     })}
