@@ -44,7 +44,7 @@ const UserPage = () => {
             <Row className="gy-3">
               <Col xs={6}>
                 <Link to="/MyCollection">
-                  <Button variant="secondary" className="w-100" size = "large">
+                  <Button className="w-100" size = "large">
                     Card Collection
                   </Button>
                 </Link>
@@ -52,7 +52,7 @@ const UserPage = () => {
 
               <Col xs={6}>
                 <Link to="/DeckCreator">
-                  <Button variant="secondary" className="w-100" size = "large">
+                  <Button className="w-100" size = "large">
                     Deck Creator
                   </Button>
                 </Link>
@@ -60,7 +60,7 @@ const UserPage = () => {
 
               <Col xs={6}>
                 <Link to="/MyDecks">
-                  <Button variant="secondary" className="w-100" size = "large">
+                  <Button className="w-100" size = "large">
                     My Decks
                   </Button>
                 </Link>
@@ -68,7 +68,7 @@ const UserPage = () => {
 
               <Col xs={6}>
                 <Link to="/Settings">
-                  <Button variant="secondary" className="w-100" size = "large">
+                  <Button className="w-100" size = "large">
                     Settings
                   </Button>
                 </Link>
