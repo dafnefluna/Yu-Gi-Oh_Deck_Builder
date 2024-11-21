@@ -3,7 +3,6 @@ import { Schema, model, Document } from 'mongoose';
 // todo: add question marks for consideration of the spell/trap/ non monster cards
 // Define an interface for the Thought document
 export interface ICard extends Document {
-apiId: number;
 name: string;
 type: string;
 description: string;
@@ -18,10 +17,6 @@ image?: string;
 
 const cardSchema = new Schema<ICard>(
     {
-        apiId:{
-            type: Number,
-            required: true,
-        },
         name:{
             type: String,
             required: true,

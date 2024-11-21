@@ -33,7 +33,6 @@ interface AddCardToDeckArg {
 
 interface AddCardArg {
     input: {
-        apiId: number
         name: string
         type: string
         description: string
