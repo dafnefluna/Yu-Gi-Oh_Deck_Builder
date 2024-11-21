@@ -37,6 +37,8 @@ const LandingPage: React.FC = () => {
     }
   };
 
+  
+
   const handleSignup: FormProps<FieldType>['onFinish'] = async (values: any) => {
     try {
       const { data } = await addUser({
