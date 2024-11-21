@@ -17,7 +17,6 @@ const typeDefs = gql`
 
     type Card {
         _id: ID
-        apiId: Int
         name: String
         type: String
         description: String
@@ -31,7 +30,6 @@ const typeDefs = gql`
     }
 
     input CardInput{
-        apiId: Int
         name: String
         type: String
         description: String

@@ -32,7 +32,6 @@ export const SAVE_NEW_CARD = gql `
     mutation AddCardToUser($input: CardInput) {
   addCardToUser(input: $input) {
     _id
-    apiId
     name
     type
     description
@@ -102,7 +101,6 @@ mutation DeleteCardFromUser($cardId: ID!) {
     email
     savedCards {
       _id
-      apiId
       name
       type
       description

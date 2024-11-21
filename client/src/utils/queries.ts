@@ -11,7 +11,6 @@ export const QUERY_USER = gql`
     email
     savedCards {
       _id
-      apiId
       name
       type
       description
@@ -45,7 +44,6 @@ export const QUERY_ME = gql`
     email
     savedCards {
       _id
-      apiId
       name
       type
       description
@@ -72,8 +70,7 @@ export const QUERY_ME = gql`
 export const QUERY_GETALLCARDS =  gql `
     query AllCards {
   allCards {
-    _id
-    apiId
+    _i
     name
     type
     description
@@ -96,7 +93,6 @@ query AllDecks {
     playable
     cards {
       _id
-      apiId
       name
       type
       description
@@ -114,10 +110,9 @@ query AllDecks {
 `;
 
 export const  QUERY_GETSINGLECARD = gql `
-   query CardById($cardId: ID!) {
+  query CardById($cardId: ID!) {
   cardById(cardId: $cardId) {
     _id
-    apiId
     name
     type
     description
@@ -140,7 +135,6 @@ query DeckById($deckId: ID!) {
     playable
     cards {
       _id
-      apiId
       name
       type
       description

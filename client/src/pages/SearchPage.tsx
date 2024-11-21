@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 // import fs from 'fs';
 // import path from 'path';
 
@@ -14,8 +14,8 @@ import Pagination from '../components/Pagination';
 import type { Cards } from '../interfaces/Card'
 import { searchYuGiOhCard } from '../utils/mutations';
 import type { YuGiOhCard } from '../interfaces/YuGiOhAPISearch';
-import Auth from '../utils/auth';
-import { saveCardIds, getSavedCardIds } from '../utils/localStorage';
+// import Auth from '../utils/auth';
+// import { saveCardIds, getSavedCardIds } from '../utils/localStorage';
 import CardList from '../components/CardLayout';
 
 const SearchPage = () => {
@@ -23,15 +23,15 @@ const SearchPage = () => {
 
     const [searchInput, setSearchInput] = useState('')
     const [dropInput, setDropInput] = useState('fname');
-    const [savedCardIds, setSavedCardIds] = useState(getSavedCardIds());
+    // const [savedCardIds, setSavedCardIds] = useState(getSavedCardIds());
     const [currentPage, setCurrentPage] = useState(0);
     const [error, setError] = useState('');
 
     const cardsPerPage = 5;
 
-    useEffect(() => {
-        return () => saveCardIds(savedCardIds);
-    })
+    // useEffect(() => {
+    //     return () => saveCardIds(savedCardIds);
+    // })
 
     const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -60,8 +60,8 @@ const SearchPage = () => {
                 type: card.type,
                 archetype: card.archetype,
                 description: card.desc,
-                atk: card.atk,
-                def: card.def,
+                attack: card.atk,
+                defense: card.def,
             }));
             // console.log(cardData);
 
@@ -128,20 +128,20 @@ const SearchPage = () => {
     //     }
     // }
 
-    const handleSaveCard = async (cardId: string) => {
-        const token = Auth.loggedIn() ? Auth.getToken() : null;
+    // const handleSaveCard = async (cardId: string) => {
+    //     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-        if (!token) {
-            return false;
-        }
+    //     if (!token) {
+    //         return false;
+    //     }
 
-        try {
+    //     try {
 
-            setSavedCardIds([cardId]);
-        } catch (error) {
-            console.error('Error saving card: ', error);
-        }
-    };
+    //         setSavedCardIds([cardId]);
+    //     } catch (error) {
+    //         console.error('Error saving card: ', error);
+    //     }
+    // };
 
     return (
         <>
@@ -189,7 +189,7 @@ const SearchPage = () => {
                         : 'Search for a card to begin'}
                 </h2>
                 
-                <CardList cards = {currentCards} savedCardIds = {savedCardIds} handleSaveCard = {handleSaveCard} />
+                <CardList cards = {currentCards} />
 
                 <Pagination
                     currentPage={currentPage}
