@@ -187,9 +187,8 @@ const SearchPage = () => {
                     <Pagination
                         hideOnSinglePage={true}
                         pageSize={currentCardsPer}
-                        total = {searchedCards.length}
+                        total = {totalPages}
                         current={currentPage}
-                        totalPages={totalPages}
                         showSizeChanger={true}
                         pageSizeOptions={['6', '12', '18', '24']}
                         onChange={onPageChange}

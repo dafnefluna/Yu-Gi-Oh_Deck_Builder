@@ -1,13 +1,5 @@
 import Accordion from 'react-bootstrap/Accordion';
-<<<<<<< HEAD
-import {
-    Col,
-    // Button,
-    Card,
-} from 'react-bootstrap';
-=======
 import { Col, Card } from 'react-bootstrap';
->>>>>>> 26e6016e934f4d1a60ad8ac34492b4f0c1a873bb
 import { Cards } from '../interfaces/Card.js'
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
