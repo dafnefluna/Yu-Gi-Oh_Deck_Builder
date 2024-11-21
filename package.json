@@ -20,7 +20,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "antd": "^5.22.1",
+    "antd": "^5.22.2",
     "bootstrap": "^5.3.3",
     "concurrently": "^8.2.2",
     "node-fetch": "^3.3.2"
