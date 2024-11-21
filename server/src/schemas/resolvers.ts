@@ -112,27 +112,21 @@ const resolvers = {
             return { token, user };
         },
 
-        login: async (_parent: any, { username, password }: LoginUserArgs) => {
-            // Find a user with the provided email
+        login: async (_parent: any, {username, password }: LoginUserArgs) => {
             const user = await User.findOne({ username });
 
-            // If no user is found, throw an AuthenticationError
             if (!user) {
                 throw new AuthenticationError('Could not authenticate user.');
             }
 
-            // Check if the provided password is correct
             const correctPw = await user.isCorrectPassword(password);
 
-            // If the password is incorrect, throw an AuthenticationError
             if (!correctPw) {
                 throw new AuthenticationError('Could not authenticate user.');
             }
 
-            // Sign a token with the user's information
             const token = signToken(user.username, user.email, user._id);
 
-            // Return the token and the user
             return { token, user };
         },
 

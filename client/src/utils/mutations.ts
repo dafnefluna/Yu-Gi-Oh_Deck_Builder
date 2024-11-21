@@ -1,13 +1,12 @@
 import { gql } from '@apollo/client';
 
 export const LOGIN_USER = gql`
-    mutation Login($username: String!, $password: String!) {
+    mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
     token
     user {
         _id
         username
-        email
     }
     }
 }
@@ -21,14 +20,13 @@ export const ADD_USER = gql`
     user {
         _id
         username
-        email
     }
     }
 }
 `;
 
 // todo: do we add the _id or not. Maybe not bc its the solution the problem
-export const SAVE_NEW_CARD = gql `
+export const SAVE_NEW_CARD = gql`
     mutation AddCardToUser($input: CardInput) {
   addCardToUser(input: $input) {
     _id
@@ -46,7 +44,7 @@ export const SAVE_NEW_CARD = gql `
 }
 `;
 
-export const ADD_CARD_TO_DECK = gql `
+export const ADD_CARD_TO_DECK = gql`
     mutation AddCardToDeck($deckId: String!, $cardId: String!) {
   addCardToDeck(deckId: $deckId, cardId: $cardId) {
     _id
@@ -58,7 +56,7 @@ export const ADD_CARD_TO_DECK = gql `
 }
 `;
 
-export const CREATE_NEW_DECK = gql `
+export const CREATE_NEW_DECK = gql`
     mutation CreateDeck($input: DeckInput) {
   createDeck(input: $input) {
     _id
@@ -81,7 +79,7 @@ export const CREATE_NEW_DECK = gql `
 //     }
 // `;
 
-export const UPDATE_DECK_DETAILS = gql `
+export const UPDATE_DECK_DETAILS = gql`
     mutation UpdateDeckName($deckId: String!, $input: DeckInput) {
   updateDeckName(deckId: $deckId, input: $input) {
     _id
@@ -93,7 +91,7 @@ export const UPDATE_DECK_DETAILS = gql `
 }
 `;
 
-export const DELETE_CARD_FROM_USER = gql `
+export const DELETE_CARD_FROM_USER = gql`
 mutation DeleteCardFromUser($cardId: ID!) {
   deleteCardFromUser(cardId: $cardId) {
     _id
@@ -126,5 +124,5 @@ mutation DeleteCardFromUser($cardId: ID!) {
 `;
 
 export const searchYuGiOhCard = (cardProperty: string, cardInfo: string) => {
-    return fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?${cardProperty}=${cardInfo}`);
+  return fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?${cardProperty}=${cardInfo}`);
 };
