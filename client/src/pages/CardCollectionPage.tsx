@@ -1,9 +1,5 @@
 import Accordion from 'react-bootstrap/Accordion';
-import {
-    Col,
-    Button,
-    Card,
-} from 'react-bootstrap';
+import { Col, Card } from 'react-bootstrap';
 import { Cards } from '../interfaces/Card.js'
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
@@ -50,8 +46,7 @@ const CardCollectionPage: React.FC = () => {
                             <Card.Text>[{card.race} / {card.type}]</Card.Text>
                             <Card.Text>{card.description}</Card.Text>
                             <Card.Text>ATK: {card.atk} | DEF: {card.def}</Card.Text>
-                            <CardtoDeck cardId={card.id} deckId="some-deck-id"/>
-                            {/* need to fix cardtodeck */}
+                            <CardtoDeck card={card} />
                     </Card.Body>
                     </Card>
 

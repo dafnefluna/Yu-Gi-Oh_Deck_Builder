@@ -1,15 +1,14 @@
 import React from 'react';
 import Auth from '../utils/auth';
-import { Row, Col, Card, Button } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 import { Cards } from '../interfaces/Card'
+import CardtoDeck from './CardToDeck.js';
 
 interface CardListProps {
     cards: Cards[];
-    savedCardIds: string[];
-    handleSaveCard: (cardId: string) => void;
 }
 
-const CardList: React.FC<CardListProps> = ({ cards, savedCardIds, handleSaveCard }) => (
+const CardList: React.FC<CardListProps> = ({ cards}) => (
     <Row>
         {cards.map((card) => {
             return (
@@ -25,14 +24,7 @@ const CardList: React.FC<CardListProps> = ({ cards, savedCardIds, handleSaveCard
                             <Card.Text>{card.description}</Card.Text>
                             <Card.Text>ATK: {card.atk} | DEF: {card.def}</Card.Text>
                             {Auth.loggedIn() && (
-                                <Button
-                                    disabled={savedCardIds?.some((savedCardId: string) => savedCardId === card.name)}
-                                    className='btn-block btn-info'
-                                    onClick={() => handleSaveCard(card.name)}>
-                                    {savedCardIds?.some((savedCardId: string) => savedCardId === card.name)
-                                        ? 'This card has already been saved!'
-                                        : 'Save this Card!'}
-                                </Button>
+                                <><CardtoDeck card={card}/></>
                             )}
                         </Card.Body>
                     </Card>
@@ -41,5 +33,12 @@ const CardList: React.FC<CardListProps> = ({ cards, savedCardIds, handleSaveCard
         })}
     </Row>
 );
+
+// disabled={savedCardIds?.some((savedCardId: string) => savedCardId === card.name)}
+// className='btn-block btn-info'
+// onClick={() => handleSaveCard(card.name)}>
+// {savedCardIds?.some((savedCardId: string) => savedCardId === card.name)
+    // ? 'This card has already been saved!'
+//     : 'Save this Card!'}
 
 export default CardList;

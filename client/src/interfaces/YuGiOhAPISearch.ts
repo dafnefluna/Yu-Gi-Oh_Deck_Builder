@@ -1,15 +1,15 @@
 export interface YuGiOhCard {
-    id: BigInteger;
+    id: string;
     card_images: {
         image_url: string;
     }[];
     name: string;
     attribute: string;
-    level: BigInteger;
+    level: number;
     race: string;
     type: string;
     archetype: string;
     desc: string;
-    atk: BigInteger;
-    def: BigInteger;
+    atk: number;
+    def: number;
 }
