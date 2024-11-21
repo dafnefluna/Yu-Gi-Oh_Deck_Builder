@@ -185,7 +185,7 @@ const SearchPage = () => {
 
                 <div className ='d-flex justify-content-center mt-4 mb-4 pagination-container'>
                     <Pagination
-                        hideOnSinglePage = 'true'
+                        hideOnSinglePage={true}
                         pageSize={currentCardsPer}
                         total = {searchedCards.length}
                         current={currentPage}
@@ -193,7 +193,7 @@ const SearchPage = () => {
                         showSizeChanger={true}
                         pageSizeOptions={['6', '12', '18', '24']}
                         onChange={onPageChange}
-                        size='large'
+                        size='default'
                     />
                 </div>
             </Container>
