@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 // note: when we get to the end in type User, think about removing password for security purposes if nothing break
 // the arrays are referring the types in
 // todo: double check the cardId/deckId vs _id in the backend ask TA 11/17
-
+// testing /
 const typeDefs = gql`
     type User {
         _id: ID
@@ -14,6 +14,7 @@ const typeDefs = gql`
         savedCards: [Card]
         allDecks: [Deck] 
     }
+
 
     type Card {
         _id: ID
