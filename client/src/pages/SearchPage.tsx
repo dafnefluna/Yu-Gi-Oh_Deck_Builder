@@ -10,7 +10,7 @@ import {
     Row
 } from 'react-bootstrap';
 
-import Pagination from '../components/Pagination';
+import { Pagination } from 'antd';
 import type { Cards } from '../interfaces/Card'
 import { searchYuGiOhCard } from '../utils/mutations';
 import type { YuGiOhCard } from '../interfaces/YuGiOhAPISearch';
@@ -26,8 +26,7 @@ const SearchPage = () => {
     const [savedCardIds, setSavedCardIds] = useState(getSavedCardIds());
     const [currentPage, setCurrentPage] = useState(0);
     const [error, setError] = useState('');
-
-    const cardsPerPage = 5;
+    const [currentCardsPer, setCardsPer] = useState(6);
 
     useEffect(() => {
         return () => saveCardIds(savedCardIds);
@@ -85,23 +84,16 @@ const SearchPage = () => {
 
 
     /*Pagination variables*/
-    const lastIndex = currentPage * cardsPerPage;
-    const firstIndex = lastIndex - cardsPerPage;
+    const lastIndex = currentPage * currentCardsPer;
+    const firstIndex = lastIndex - currentCardsPer;
 
     const currentCards = searchedCards.slice(firstIndex, lastIndex);
 
-    const totalPages = Math.ceil(searchedCards.length / cardsPerPage);
+    const totalPages = Math.ceil(searchedCards.length / currentCardsPer);
 
-    const prevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    }
-
-    const nextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
+    const onPageChange = (page: number, size: number) => {
+        setCurrentPage(page);
+        setCardsPer(size);
     }
     //
 
@@ -188,15 +180,22 @@ const SearchPage = () => {
                         ? `Viewing ${searchedCards.length} results:`
                         : 'Search for a card to begin'}
                 </h2>
-                
-                <CardList cards = {currentCards} savedCardIds = {savedCardIds} handleSaveCard = {handleSaveCard} />
 
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages = {totalPages}
-                    prevPage = {prevPage}
-                    nextPage = {nextPage}
-                />
+                <CardList cards={currentCards} savedCardIds={savedCardIds} handleSaveCard={handleSaveCard} />
+
+                <div className ='d-flex justify-content-center mt-4 mb-4 pagination-container'>
+                    <Pagination
+                        hideOnSinglePage = 'true'
+                        pageSize={currentCardsPer}
+                        total = {searchedCards.length}
+                        current={currentPage}
+                        totalPages={totalPages}
+                        showSizeChanger={true}
+                        pageSizeOptions={['6', '12', '18', '24']}
+                        onChange={onPageChange}
+                        size='large'
+                    />
+                </div>
             </Container>
         </>
     );

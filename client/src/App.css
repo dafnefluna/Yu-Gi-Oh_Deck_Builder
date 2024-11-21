@@ -15,4 +15,47 @@ body {
     font-weight: 300;
     font-style: italic;
   }
+
+
+
+.pagination-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 767px) {
+  .pagination-container  {
+    font-size: 18px;
+  }
+
+  .pagination-container .ant-pagination-item {
+    width: 32px;
+    height: 32px; 
+  }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+  .pagination-container .ant-pagination {
+    font-size: 20px;
+  }
+
+  .pagination-container .ant-pagination-item {
+    width: 40px; 
+    height: 40px; 
+  }
+}
+
+@media (min-width: 992px) {
+  .pagination-container .ant-pagination {
+    font-size: 24px;
+  }
+
+  .pagination-container .ant-pagination-item {
+    width: 48px; 
+    height: 48px; 
+  }
+}
   
