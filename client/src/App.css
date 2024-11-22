@@ -1,14 +1,14 @@
 body {
     font-family: 'Rubik', sans-serif;
-
+ 
+/* 
     margin: 0;
     padding: 0;
     background-image: url('../src/assets/Site_Background.png');
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
-    background-position: center;
-    height: 100vh;
-    overflow: hidden;
+    background-attachment: fixed;
+    background-position: center; */
   }
   
   h1,
@@ -24,6 +24,19 @@ body {
     font-weight: 300;
     font-style: italic;
   }
+
+.backgroundStyle {
+  background-image: url('../src/assets/Site_Background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+  width: 100%;
+  position: fixed;
+  z-index: -1;
+}
 
 
 

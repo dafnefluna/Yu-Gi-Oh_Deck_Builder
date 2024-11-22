@@ -137,6 +137,7 @@ const SearchPage = () => {
 
     return (
         <>
+        <div className='backgroundStyle'></div>
             <div className='text-light bg-dark p-5'>
                 <Container>
                     <h1>Yu-Gi-Oh Deck Builder</h1>
