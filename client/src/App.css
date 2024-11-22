@@ -132,3 +132,14 @@ body {
 .accordion-body {
   background-color: #132945;
 }
+
+#savebutton {
+  background-color: #0f1a26;
+  color: white;
+}
+
+.btn-group {
+  background-color: #0f1a26;
+  color: white;
+}
+
