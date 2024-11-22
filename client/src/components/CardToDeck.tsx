@@ -108,9 +108,9 @@ const CardtoDeck: React.FC<CardtoDeckProps> = ({ card }) => {
         <div>
             <ButtonGroup>
                 <DropdownButton as={ButtonGroup} title="Save Card" id="bg-nested-dropdown" onSelect={handleSelect}>
-                    <Dropdown.Item eventKey="1">... To My Collection</Dropdown.Item>
+                    <Dropdown.Item id='savebutton' eventKey="1">To My Collection</Dropdown.Item>
                     {/* <Dropdown.Item eventKey="2">... To New Deck</Dropdown.Item> */}
-                    <Dropdown.Item eventKey="2">... To Existing Deck</Dropdown.Item>
+                    <Dropdown.Item id='savebutton' eventKey="2">To Existing Deck</Dropdown.Item>
                 </DropdownButton>
                 {eventKey === '2' && (
                     <DropdownButton as={ButtonGroup} title="Select Deck" id="deck-dropdown" onSelect={(e) => setSelectedDeckId(e)}>
