@@ -164,7 +164,7 @@ const LandingPage: React.FC = () => {
   ];
 
   return (
-    <div className='backgroundStyle'>
+    <div className='landingStyle'>
       <div
         style={{
           display: "flex",
