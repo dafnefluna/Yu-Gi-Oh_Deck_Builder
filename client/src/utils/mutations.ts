@@ -15,13 +15,13 @@ export const LOGIN_USER = gql`
 // todo: where is theUserInput coming from? 11/17
 export const ADD_USER = gql`
     mutation AddUser($input: UserInput!) {
-    addUser(input: $input) {
+  addUser(input: $input) {
     token
     user {
         _id
         username
     }
-    }
+  }
 }
 `;
 

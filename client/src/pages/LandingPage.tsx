@@ -21,23 +21,21 @@ const LandingPage: React.FC = () => {
 
   const handleLogin: FormProps<FieldType>['onFinish'] = async (values: any) => {
 
-
     try {
       const { data } = await login({
         variables: { ...values },
       });
-
+      console.log(data.login.token);
+      Auth.login(data.login.token);
       if (!data.ok) {
         throw new Error('something went wrong!');
       }
-
-      Auth.login(data.login.token);
     } catch (error) {
       console.error(error);
     }
   };
 
-  
+
 
   const handleSignup: FormProps<FieldType>['onFinish'] = async (values: any) => {
     try {
