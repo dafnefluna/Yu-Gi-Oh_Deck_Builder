@@ -138,7 +138,7 @@ const SearchPage = () => {
     return (
         <>
             <div className='text-light bg-dark p-5'>
-                <Container>
+                <Container className = "backgroundStyle">
                     <h1>Yu-Gi-Oh Deck Builder</h1>
                     <Form onSubmit={handleFormSubmit}>
                         <Row>
