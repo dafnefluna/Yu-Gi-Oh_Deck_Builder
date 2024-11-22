@@ -1,23 +1,14 @@
-const DeckPage = () => {
-    return (
-        <>
-        </>
-    )
-}
-
-export default DeckPage;
-
 import Accordion from 'react-bootstrap/Accordion';
 import { Col, Card } from 'react-bootstrap';
 import { Decks } from '../interfaces/Deck.js'
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_GETALLDECKS } from '../utils/queries.js';
-import CardtoDeck from '../components/CardToDeck.js';
+// import CardtoDeck from '../components/CardToDeck.js';
 
 
 
-const CardCollectionPage: React.FC = () => {
+const DeckPage: React.FC = () => {
 
     // establisha  state for the card data
     const [decks, setDecks] = useState<Decks[] | null>([]);
@@ -27,8 +18,9 @@ const CardCollectionPage: React.FC = () => {
     const { data: deckDataQuery, loading: deckLoading, error: deckError } = useQuery(QUERY_GETALLDECKS);
     
         useEffect(() => {
-            if (deckDataQuery && deckDataQuery.Decks) {
-                setDecks(deckDataQuery.getAllDecks);
+            if (deckDataQuery) {
+                console.timeLog(deckDataQuery)
+                setDecks(deckDataQuery.allDecks);
             }
         }, [deckDataQuery]);
 
@@ -44,18 +36,16 @@ const CardCollectionPage: React.FC = () => {
             <Accordion.Item eventKey={index.toString()} key={deck.id}>
                 <Accordion.Header>
                 {deck.cards[0].image ? (
-                            <Card.Img src={card.image} alt={`Art for ${card.name}`} variant='top' />
+                            <Card.Img src={deck.cards[0].image} alt={`Art for ${deck.cards[0].name}`} variant='top' />
                         ) : null}
                 </Accordion.Header>
                 <Accordion.Body>
                     <Card border='dark'>
                     <Card.Body>
-                            <Card.Text>{card.name}</Card.Text>
-                            <Card.Text>ATR: {card.attribute} | Level: {card.level}</Card.Text>
-                            <Card.Text>[{card.race} / {card.type}]</Card.Text>
-                            <Card.Text>{card.description}</Card.Text>
-                            <Card.Text>ATK: {card.atk} | DEF: {card.def}</Card.Text>
-                            <CardtoDeck card={card} />
+                            <Card.Text>{deck.name}</Card.Text>
+                            <Card.Text>Playable?: {deck.playable}</Card.Text>
+                            <Card.Text>Type: {deck.type}</Card.Text>
+                            <Card.Text>Saved Cards</Card.Text>
                     </Card.Body>
                     </Card>
 
@@ -68,4 +58,4 @@ const CardCollectionPage: React.FC = () => {
 };
 
 
-export default CardCollectionPage;
+export default DeckPage;

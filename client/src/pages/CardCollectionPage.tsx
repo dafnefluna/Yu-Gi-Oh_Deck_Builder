@@ -31,9 +31,7 @@ const CardCollectionPage: React.FC = () => {
     return (
 
         <Col md="4" border='dark'>
-            <h1>boop</h1>
                 <Accordion >
-            <h1>boop</h1>
                 {cards?.map((card, index) => (
                     <Accordion.Item eventKey={index.toString()} key={card.id}>
                         <Accordion.Header>
