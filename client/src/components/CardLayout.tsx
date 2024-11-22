@@ -22,7 +22,7 @@ const CardList: React.FC<CardListProps> = ({ cards}) => (
                             <Card.Text>ATR: {card.attribute} | Level: {card.level}</Card.Text>
                             <Card.Text>[{card.race} / {card.type}]</Card.Text>
                             <Card.Text>{card.description}</Card.Text>
-                            <Card.Text>ATK: {card.atk} | DEF: {card.def}</Card.Text>
+                            <Card.Text>ATK: {card.attack} | DEF: {card.defense}</Card.Text>
                             {Auth.loggedIn() && (
                                 <><CardtoDeck card={card}/></>
                             )}

@@ -70,7 +70,7 @@ export const QUERY_ME = gql`
 export const QUERY_GETALLCARDS =  gql `
     query AllCards {
   allCards {
-    _i
+    _id
     name
     type
     description
