@@ -170,7 +170,6 @@ const LandingPage: React.FC = () => {
         justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh",
-        backgroundColor: "#f0f2f5",
       }}
     >
       <Card
@@ -178,6 +177,7 @@ const LandingPage: React.FC = () => {
           width: 400,
           textAlign: "center",
           boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+          backgroundColor: "#f0f2f5",
         }}
       >
         <Avatar
