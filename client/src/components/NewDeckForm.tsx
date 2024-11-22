@@ -39,7 +39,7 @@ const NewDeckModal: React.FC = () => {
                             {['checkbox', 'radio'].map((type) => (
                                 <div key={`default-${type}`} className="mb-3">
                                     <Form.Check // prettier-ignore
-                                        type={type}
+                                        // type={type}
                                         id={`default-${type}`}
                                         label={`default ${type}`}
                                     />

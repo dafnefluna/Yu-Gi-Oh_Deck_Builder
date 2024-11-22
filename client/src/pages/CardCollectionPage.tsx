@@ -1,5 +1,5 @@
 import Accordion from 'react-bootstrap/Accordion';
-import { Card, Col } from 'react-bootstrap';
+import { Card, Col, Row } from 'react-bootstrap';
 import { Cards } from '../interfaces/Card.js'
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
@@ -29,11 +29,9 @@ const CardCollectionPage: React.FC = () => {
 
 
     return (
-
+<Row>
         <Col md="4" border='dark'>
-            <h1>boop</h1>
                 <Accordion >
-            <h1>boop</h1>
                 {cards?.map((card, index) => (
                     <Accordion.Item eventKey={index.toString()} key={card.id}>
                         <Accordion.Header>
@@ -58,6 +56,7 @@ const CardCollectionPage: React.FC = () => {
                 ))}
             </Accordion>
         </Col>
+        </Row>
     );
 };
 

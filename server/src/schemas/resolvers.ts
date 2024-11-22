@@ -180,9 +180,9 @@ const resolvers = {
         //         const deck = await Deck.findById(deckId);
         //             console.log(deck);
         //             if (deck) {
-        //         const cardIndex = deck.cards?.indexOf({ _id: cardId });
+        //         const cardIndex = deck.cards?.findIndex(card => card.equals(cardId));
         //         if (cardIndex) {
-        //             deck.cards?.splice(cardIndex)
+        //             deck.cards?.splice(cardIndex,1)
         //         };
         //         const updatedDeck = await deck.save();
         //         return updatedDeck
