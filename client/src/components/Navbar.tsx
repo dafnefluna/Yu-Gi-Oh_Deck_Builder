@@ -15,10 +15,16 @@ const AppNavbar = () => {
     <>
       <Navbar bg='dark' variant='dark' expand='lg'>
         <Container fluid>
-          <Navbar.Brand as={Link} to='/'>
-            Yu-Gi-Oh Deck Builder
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls='navbar'/>
+          {Auth.loggedIn() ? (
+            <Navbar.Brand as={Link} to='/Profile'>
+              Yu-Gi-Oh Deck Builder
+            </Navbar.Brand>
+          ) : (
+            <Navbar.Brand as={Link} to='/'>
+              Yu-Gi-Oh Deck Builder
+            </Navbar.Brand>
+          )}
+          <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar' className='flex-row-reverse'>
             <Nav className='ml-auto'>
               <Nav.Link as={Link} to='/Search'>
