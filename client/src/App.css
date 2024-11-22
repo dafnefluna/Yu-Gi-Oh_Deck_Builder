@@ -120,4 +120,15 @@ body {
     height: 48px; 
   }
 }
-  
+
+.accordion-button {
+  background-color: black;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #132945;
+}
+
+.accordion-body {
+  background-color: #132945;
+}
