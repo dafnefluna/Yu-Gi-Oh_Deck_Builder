@@ -53,32 +53,16 @@ const UserPage = () => {
                 <Row gutter={[16, 16]} justify="space-around">
                   <Col xs={12}>
                     <Link to="/MyCollection">
-                      <Button type="default" block size="large" className = 'customButton'>
+                      <Button type="default" block size="large" className = 'customButton' style={{ boxShadow: '0 4px 12px' }}>
                         Card Collection
                       </Button>
                     </Link>
                   </Col>
 
                   <Col xs={12}>
-                    <Link to="/DeckCreator">
-                    <Button type="default" block size="large" className = 'customButton'>
-                    Deck Creator
-                      </Button>
-                    </Link>
-                  </Col>
-
-                  <Col xs={12}>
                     <Link to="/MyDecks">
-                    <Button type="default" block size="large" className = 'customButton'>
+                    <Button type="default" block size="large" className = 'customButton' style={{ boxShadow: '0 4px 12px' }}>
                     My Decks
-                      </Button>
-                    </Link>
-                  </Col>
-
-                  <Col xs={12}>
-                    <Link to="/Settings">
-                    <Button type="default" block size="large" className = 'customButton'>
-                    Settings
                       </Button>
                     </Link>
                   </Col>
