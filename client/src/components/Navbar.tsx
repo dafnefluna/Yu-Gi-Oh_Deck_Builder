@@ -10,6 +10,7 @@ const AppNavbar = () => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
 
+
   return (
     <>
       <Navbar bg='dark' variant='dark' expand='lg'>
@@ -17,13 +18,12 @@ const AppNavbar = () => {
           <Navbar.Brand as={Link} to='/'>
             Yu-Gi-Oh Deck Builder
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls='navbar' />
-          <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
-            <Nav className='ml-auto d-flex'>
+          <Navbar.Toggle aria-controls='navbar'/>
+          <Navbar.Collapse id='navbar' className='flex-row-reverse'>
+            <Nav className='ml-auto'>
               <Nav.Link as={Link} to='/Search'>
                 Search For Cards
               </Nav.Link>
-              {/* if user is logged in show saved decks and logout */}
               {Auth.loggedIn() ? (
                 <>
                   <Nav.Link as={Link} to='/Profile'>
