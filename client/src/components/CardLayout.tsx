@@ -8,7 +8,7 @@ interface CardListProps {
     cards: Cards[];
 }
 
-const CardList: React.FC<CardListProps> = ({ cards}) => (
+const CardList: React.FC<CardListProps> = ({ cards }) => (
     <Row>
         {cards.map((card) => {
             return (
