@@ -45,11 +45,11 @@ const LandingPage: React.FC = () => {
       const { data } = await addUser({
         variables: { input: { ...values } },
       });
-  
+
       Auth.login(data.addUser.token);
     } catch (error: any) {
       console.error(error);
-  
+
       // Check for duplicate key error (MongoDB E11000 error code)
       if (error?.message.includes("E11000 duplicate key error")) {
         setErrorMessage("Username already exists");
@@ -164,30 +164,32 @@ const LandingPage: React.FC = () => {
   ];
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-      }}
-    >
-      <Card
+    <div className='backgroundStyle'>
+      <div
         style={{
-          width: 400,
-          textAlign: "center",
-          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-          backgroundColor: "#f0f2f5",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
         }}
       >
-        <Avatar
-          size={{ xs: 20, sm: 50, md: 100, lg: 150, xl: 200, xxl: 250 }}
-          src={`${Logo}`}
-          alt="Logo"
-          style={{ marginBottom: 20 }}
-        />
-        <Tabs defaultActiveKey="1" items={items} />
-      </Card>
+        <Card
+          style={{
+            width: 400,
+            textAlign: "center",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+            backgroundColor: "#f0f2f5",
+          }}
+        >
+          <Avatar
+            size={{ xs: 20, sm: 50, md: 100, lg: 150, xl: 200, xxl: 250 }}
+            src={`${Logo}`}
+            alt="Logo"
+            style={{ marginBottom: 20 }}
+          />
+          <Tabs defaultActiveKey="1" items={items} />
+        </Card>
+      </div>
     </div>
   );
 };
