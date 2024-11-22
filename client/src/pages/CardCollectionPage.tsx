@@ -13,46 +13,50 @@ const CardCollectionPage: React.FC = () => {
     // establisha  state for the card data
     const [cards, setCards] = useState<Cards[] | null>([]);
     const { data: cardDataQuery, loading: cardLoading, error: cardError } = useQuery(QUERY_GETALLCARDS);
+    
 
-        useEffect(() => {
-            if (cardDataQuery && cardDataQuery.Cards) {
-                setCards(cardDataQuery.Cards);
-            }
-        }, [cardDataQuery]);
+    useEffect(() => {
+        if (cardDataQuery) {
+            console.log(cardDataQuery);
+            setCards(cardDataQuery.allCards);
 
-        if (cardLoading ) return <p>Loading...</p>;
-        if (cardError) return <p>Error loading card data: {cardError.message}</p>;
+        }
+    }, [cardDataQuery]);
+
+    if (cardLoading) return <p>Loading...</p>;
+    if (cardError) return <p>Error loading card data: {cardError.message}</p>;
 
 
 
     return (
+
         <Col md="4" border='dark'>
+            <h1>boop</h1>
+                <Accordion >
+            <h1>boop</h1>
+                {cards?.map((card, index) => (
+                    <Accordion.Item eventKey={index.toString()} key={card.id}>
+                        <Accordion.Header>
+                            {card.image ? (
+                                <Card.Img src={card.image} alt={`Art for ${card.name}`} variant='top' />
+                            ) : null}
+                        </Accordion.Header>
+                        <Accordion.Body>
+                            <Card border='dark'>
+                                <Card.Body>
+                                    <Card.Text>{card.name}</Card.Text>
+                                    <Card.Text>ATR: {card.attribute} | Level: {card.level}</Card.Text>
+                                    <Card.Text>[{card.race} / {card.type}]</Card.Text>
+                                    <Card.Text>{card.description}</Card.Text>
+                                    <Card.Text>ATK: {card.attack} | DEF: {card.defense}</Card.Text>
+                                    <><CardtoDeck card={card} /></>
+                                </Card.Body>
+                            </Card>
 
-
-        <Accordion >
-            {cards?.map((card, index) =>(
-            <Accordion.Item eventKey={index.toString()} key={card.id}>
-                <Accordion.Header>
-                {card.image ? (
-                            <Card.Img src={card.image} alt={`Art for ${card.name}`} variant='top' />
-                        ) : null}
-                </Accordion.Header>
-                <Accordion.Body>
-                    <Card border='dark'>
-                    <Card.Body>
-                            <Card.Text>{card.name}</Card.Text>
-                            <Card.Text>ATR: {card.attribute} | Level: {card.level}</Card.Text>
-                            <Card.Text>[{card.race} / {card.type}]</Card.Text>
-                            <Card.Text>{card.description}</Card.Text>
-                            <Card.Text>ATK: {card.attack} | DEF: {card.defense}</Card.Text>
-                            <CardtoDeck card={card} />
-                    </Card.Body>
-                    </Card>
-
-                </Accordion.Body>
-            </Accordion.Item>
+                        </Accordion.Body>
+                    </Accordion.Item>
                 ))}
-        </Accordion>
+            </Accordion>
         </Col>
     );
 };
