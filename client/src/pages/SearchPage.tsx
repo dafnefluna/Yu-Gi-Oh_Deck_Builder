@@ -179,7 +179,7 @@ const SearchPage = () => {
                 <h2 className='pt-5'>
                     {searchedCards.length
                         ? `Viewing ${searchedCards.length} results:`
-                        : 'Search for a card to begin'}
+                        : ""}
                 </h2>
 
                 <CardList cards={currentCards} />
