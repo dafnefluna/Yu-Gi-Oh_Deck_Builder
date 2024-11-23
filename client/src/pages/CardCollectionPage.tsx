@@ -7,31 +7,31 @@ import { QUERY_GETALLCARDS } from '../utils/queries.js';
 import CardtoDeck from '../components/CardToDeck.js';
 import Auth from "../utils/auth";
 import { Cards } from '../interfaces/Card.js';
+import RemoveCardFromCollection from '../components/DeleteCard.js';
 
 const CardCollectionPage: React.FC = () => {
     const [cards, setCards] = useState<Cards[] | null>(null);
     
     const username = Auth.getUsername();
-    console.log('Username:', username);  // To debug if the username is being fetched correctly
+    // console.log('Username:', username);
 
     const { data: cardDataQuery, loading: cardLoading, error: cardError, refetch } = useQuery(QUERY_GETALLCARDS, {
         variables: { username },
-        // Don't skip or use other conditions here, we need it to always run when the component is mounted
     });
 
-    // Optional: Use the refetch method manually if you need to programmatically refresh data
     useEffect(() => {
         if (cardDataQuery) {
             setCards(cardDataQuery.user.savedCards);
         }
     }, [cardDataQuery]);
 
-    // Fetch cards when the component is mounted or username changes
-    useEffect(() => {
-        if (username) {
-            refetch();  // Refetch the query if the username changes
-        }
-    }, [username, refetch]);
+    // console.log(cards);
+    
+
+    // Function to handle card removal
+    const handleCardRemoved = (removedCardId: string) => {
+        setCards((prevCards) => prevCards?.filter((card) => card._id !== removedCardId) || null);
+    };
 
     const splitIntoGroups = (arr: Cards[], groups: number) => {
         const groupSize = Math.ceil(arr.length / groups);
@@ -78,7 +78,7 @@ const CardCollectionPage: React.FC = () => {
     const CardAccordion: React.FC<{ cards: Cards[] }> = ({ cards }) => (
         <Accordion>
             {cards.map((card, index) => (
-                <Accordion.Item eventKey={index.toString()} key={card.id}>
+                <Accordion.Item eventKey={index.toString()} key={card._id}>
                     <Accordion.Header>
                         {card.image && <Card.Img src={card.image} alt={`Art for ${card.name}`} variant="top" />}
                     </Accordion.Header>
@@ -91,6 +91,10 @@ const CardCollectionPage: React.FC = () => {
                                 <Card.Text>{card.description}</Card.Text>
                                 <Card.Text>ATK: {card.attack} | DEF: {card.defense}</Card.Text>
                                 <CardtoDeck card={card} />
+                                <RemoveCardFromCollection
+                                    cardId={card._id || ''}
+                                    onCardRemoved={() => handleCardRemoved(card._id || '')}
+                                />
                             </Card.Body>
                         </Card>
                     </Accordion.Body>

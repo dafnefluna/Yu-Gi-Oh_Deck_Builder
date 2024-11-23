@@ -28,6 +28,7 @@ const DeckList: React.FC<DeckListProps> = ({ decks }) => {
 
     const [group1, group2, group3] = splitIntoThreeGroups(decks || []);
 
+console.log(decks);
 
 
     return (
@@ -77,7 +78,7 @@ const DeckList: React.FC<DeckListProps> = ({ decks }) => {
                                 <Accordion.Body>
                                     <Row>
                                         {deck.cards?.map((card) => (
-                                            <Col md="4" sm="6" xs="12" key={card.id} className="mb-4">
+                                            <Col md="4" sm="6" xs="12" key={card._id} className="mb-4">
                                                 <Card
                                                     border="dark"
                                                     onClick={() => handleCardClick(card)}
@@ -144,7 +145,7 @@ const DeckList: React.FC<DeckListProps> = ({ decks }) => {
                                 <Accordion.Body>
                                     <Row>
                                         {deck.cards?.map((card) => (
-                                            <Col md="4" sm="6" xs="12" key={card.id} className="mb-4">
+                                            <Col md="4" sm="6" xs="12" key={card._id} className="mb-4">
                                                 <Card
                                                     border="dark"
                                                     onClick={() => handleCardClick(card)}
@@ -211,7 +212,7 @@ const DeckList: React.FC<DeckListProps> = ({ decks }) => {
                                 <Accordion.Body>
                                     <Row>
                                         {deck.cards?.map((card) => (
-                                            <Col md="4" sm="6" xs="12" key={card.id} className="mb-4">
+                                            <Col md="4" sm="6" xs="12" key={card._id} className="mb-4">
                                                 <Card
                                                     border="dark"
                                                     onClick={() => handleCardClick(card)}
