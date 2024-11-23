@@ -1,4 +1,4 @@
-import { Button, Avatar, Row, Col, Card, Layout } from "antd";
+import { Button, Image, Row, Col, Card, Layout } from "antd";
 import { Link } from "react-router-dom";
 import AvatarPic from "../assets/Avatar_Bananas.png";
 import Auth from "../utils/auth";
@@ -46,10 +46,8 @@ const UserPage = () => {
             <Row justify="center" gutter={[0, 16]} style={{ marginTop: '-60px' }}>
               <Col xs={24} md={12} lg={10}>
                 <Card className="text-center" bordered style={{ boxShadow: '0 4px 12px' }}>
-                  <Avatar
-                    size={{ xs: 180, sm: 250, md: 300, lg: 350, xl: 400, xxl: 500 }}
+                  <Image
                     src={AvatarPic}
-                    shape='square'
                     style={{ display: 'block', margin: '0 auto' }}
                   />
                   <Card.Meta
