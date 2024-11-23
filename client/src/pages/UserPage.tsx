@@ -1,11 +1,23 @@
 import { Button, Row, Col, Card, Layout } from "antd";
+import { useQuery } from '@apollo/client';
 import { Link } from "react-router-dom";
 import AvatarPic from "../assets/Avatar_Bananas.png";
 import Auth from "../utils/auth";
 
+import {QUERY_ME} from '../utils/queries.js';
+
+
 const { Content } = Layout;
 
 const UserPage = () => {
+  const { loading: userLoading, error: userError, data } = useQuery(QUERY_ME)
+
+
+  if (userLoading) return <p>Loading...</p>;
+  if (userError) return <p>Error loading user data: {userError.message}</p>;
+
+  const { username } = data?.me || {};
+  console.log(username);
 
   // Check if user is logged in
   const isLoggedIn = Auth.loggedIn(); // Assuming this method returns true/false
@@ -74,7 +86,7 @@ const UserPage = () => {
                 }
               >
                 <Card.Meta
-                  title="Sergio Torres"
+                  title={username|| "User"}
                   description={
                     <>
                       <p className='userBio'>This is my Bio!</p>
