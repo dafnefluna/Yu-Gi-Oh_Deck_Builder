@@ -1,10 +1,12 @@
 import { Container } from 'react-bootstrap';
-import { Pagination } from 'antd';
+import { Button, Card, Pagination } from "antd";
 import { Decks } from '../interfaces/Deck';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_GETALLDECKS } from '../utils/queries';
 import DeckList from '../components/DeckLayout';
+import Auth from "../utils/auth";
+import { Link } from "react-router-dom";
 
 const DeckPage: React.FC = () => {
     const [decks, setDecks] = useState<Decks[]>([]);
@@ -36,9 +38,38 @@ const DeckPage: React.FC = () => {
         setCardsPer(size);
     };
 
+      // Check if user is logged in
+  const isLoggedIn = Auth.loggedIn(); // Assuming this method returns true/false
+
+  if (!isLoggedIn) {
     return (
+      <div className="containerPage">
+        <Card
+          style={{
+            width: 400,
+            textAlign: "center",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+            backgroundColor: "#f0f2f5",
+          }}
+        ><h2 style={{color: "yellow", background: "black", borderRadius: "10px",}}>Whoah! You've gone BANANAS! Please log in before viewing saved decks 🍌</h2>
+          <iframe
+            src="https://giphy.com/embed/H8uuXYln5pxVVLFn7k"
+            height="270"
+            frameBorder="0"
+            allowFullScreen
+            title="Bananas GIF"
+            style={{ marginBottom: "16px", width: "100%" }}
+          ></iframe>
+          <Link to="/">
+            <Button type="primary">Go to Login Page</Button>
+          </Link>
+        </Card>
+      </div>
+    );
+  }  
+  return (
         <Container>
-            <h2 className="pt-5">
+            <h2 className="pt-5" style={{display: "flex", justifyContent:"center"}}>
                 {decks.length
                     ? `You have ${decks.length} decks:`
                     : `Please create a deck first!`}
