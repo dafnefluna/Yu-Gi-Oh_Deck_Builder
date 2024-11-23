@@ -6,8 +6,6 @@ import { ADD_CARD_TO_DECK, SAVE_NEW_CARD } from '../utils/mutations.js';
 import { useMutation, useQuery } from '@apollo/client';
 import { QUERY_GETALLDECKS} from '../utils/queries.js';
 
-
-
 // use <CardtoDeck card={card} /> to pass into react components in app
 
 interface CardtoDeckProps {
