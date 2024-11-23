@@ -1,31 +1,89 @@
 body {
-    font-family: 'Rubik', sans-serif;
+  font-family: 'Rubik', sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
-    margin: 0;
-    padding: 0;
-    background-image: url('../src/assets/Site_Background.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: 'Rubik Mono One', sans-serif;
-  }
-  
-  .small {
-    font-weight: 300;
-    font-style: italic;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Rubik Mono One', sans-serif;
+}
 
+.small {
+  font-weight: 300;
+  font-style: italic;
+}
 
+.noScroll {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.userBio {
+  font-size: 18px;
+  font-weight: bold;
+  color: #4a4a4a;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
+}
+
+.extraText {
+  font-size: 16px;
+  font-style: italic;
+  color: #1890ff;
+}
+
+.customButton {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.customButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.backgroundStyle {
+  background-image: url('./assets/Site_Background_Comic.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  z-index: -1;
+}
+
+.containerPage {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+  align-items: center;
+}
+
+.landingStyle {
+  background-image: url('./assets/Landing_Background.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+  width: 100%;
+  position: fixed;
+  z-index: -1;
+}
+
+.hoverAvatar:hover {
+  transform: scale(1.6);
+  cursor: pointer;
+}
 
 .pagination-container {
   width: 100%;
@@ -36,24 +94,24 @@ body {
 }
 
 @media (max-width: 767px) {
-  .pagination-container  {
+  .pagination-container {
     font-size: 18px;
   }
 
   .pagination-container .ant-pagination-item {
     width: 32px;
-    height: 32px; 
+    height: 32px;
   }
 }
 
-@media (max-width: 991px) and (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 991px) {
   .pagination-container .ant-pagination {
     font-size: 20px;
   }
 
   .pagination-container .ant-pagination-item {
-    width: 40px; 
-    height: 40px; 
+    width: 40px;
+    height: 40px;
   }
 }
 
@@ -63,8 +121,29 @@ body {
   }
 
   .pagination-container .ant-pagination-item {
-    width: 48px; 
-    height: 48px; 
+    width: 48px;
+    height: 48px;
   }
 }
-  
+
+.accordion-button {
+  background-color: black !important;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #132945 !important;
+}
+
+.accordion-body {
+  background-color: #132945 !important;
+}
+
+#savebutton {
+  background-color: #0f1a26;
+  color: white;
+}
+
+.btn-group {
+  background-color: #0f1a26;
+  color: white;
+}

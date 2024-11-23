@@ -8,6 +8,6 @@ export interface Cards {
     type: string;
     archetype: string;
     description: string;
-    atk: BigInteger;
-    def: BigInteger;
+    attack: number;
+    defense: number;
 }

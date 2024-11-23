@@ -1,84 +1,134 @@
-import { Button } from 'antd';
-import { Avatar } from 'antd';
+import { Button, Row, Col, Card, Layout } from "antd";
+import { Link } from "react-router-dom";
+import AvatarPic from "../assets/Avatar_Bananas.png";
+import Auth from "../utils/auth";
 
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-
-} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+const { Content } = Layout;
 
 const UserPage = () => {
+
+  // Check if user is logged in
+  const isLoggedIn = Auth.loggedIn(); // Assuming this method returns true/false
+
+  if (!isLoggedIn) {
+    return (
+      <div className="containerPage">
+        <Card
+          style={{
+            width: 400,
+            textAlign: "center",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+            backgroundColor: "#f0f2f5",
+          }}
+        ><h2 style={{ color: "yellow", background: "black", borderRadius: "10px", }}>Whoah! You've gone BANANAS! Please log in before viewing profile 🍌</h2>
+          <iframe
+            src="https://giphy.com/embed/H8uuXYln5pxVVLFn7k"
+            height="270"
+            frameBorder="0"
+            allowFullScreen
+            title="Bananas GIF"
+            style={{ marginBottom: "16px", width: "100%" }}
+          ></iframe>
+          <Link to="/">
+            <Button type="primary">Go to Login Page</Button>
+          </Link>
+        </Card>
+      </div>
+    );
+  }
+
+  // Render UserPage content if logged in
   return (
-
-    <Container>
-      <Row className="justify-content-center">
-        <Col xs={12} md={8} lg={6}>
-          <Card className="text-center shadow-sm">
-            <Avatar
-              size={{ xs: 180, sm: 250, md: 300, lg: 350, xl: 400, xxl: 500 }}
-              src={"https://preview.redd.it/would-this-make-exodia-viable-v0-0w9xrx32vw4c1.jpeg?width=640&crop=smart&auto=webp&s=99a27fa972b8f02aa1778367371a004e08a8b989"}
-              style={{ marginLeft: "auto", marginRight: "auto" }}
-            />
-            <Card.Body>
-              <Card.Title>Sergio Torres</Card.Title>
-              <Card.Text>
-                This is my Bio!
-                Let's Battle!
-              </Card.Text>
-
-              <Link to="/Search">
-                <Button >
-                  Search for Cards
-                </Button>
-              </Link>
-
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-
-      <Row className='justify-content-center'>
-        <Col xs={12} sm={10} md={8} lg={6}>
-          <Row className="gy-3">
-            <Col xs={6}>
-              <Link to="/MyCollection">
-                <Button className="w-100" size="large">
-                  Card Collection
-                </Button>
-              </Link>
+    <>
+      <div className="backgroundStyle"></div>
+      <div className="containerPage">
+        <Content>
+          <Row justify="center" gutter={[0, 16]} style={{ marginTop: '-60px' }}>
+            <Col xs={24} md={12} lg={10}>
+              <Card
+                className="text-center"
+                bordered
+                style={{ boxShadow: '0 4px 12px' }}
+                cover={
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center', 
+                      height: '550px',   
+                    }}
+                  >
+                    <img
+                      alt="avatar picture"
+                      src={`${AvatarPic}`}
+                      className = 'hoverAvatar'
+                      style={{
+                        width: '500px',       
+                        height: '500px',
+                        objectFit: 'contain',
+                        display: 'block',
+                        transition: 'transform 0.3s ease'
+                      }}
+                    />
+                  </div>
+                }
+              >
+                <Card.Meta
+                  title="Sergio Torres"
+                  description={
+                    <>
+                      <p className='userBio'>This is my Bio!</p>
+                      <p className='extraText'>Let's Battle!</p>
+                    </>
+                  }
+                  style={{ textAlign: 'center'}}
+                />
+                <div style={{ marginTop: '20px' }}>
+                  <Link to="/Search">
+                    <Button type="primary" block size="large" className='customButton'>
+                      Search for Cards
+                    </Button>
+                  </Link>
+                </div>
+              </Card>
             </Col>
-
-            <Col xs={6}>
-              <Link to="/DeckCreator">
-                <Button className="w-100" size="large">
-                  Deck Creator
-                </Button>
-              </Link>
-            </Col>
-
-            <Col xs={6}>
-              <Link to="/MyDecks">
-                <Button className="w-100" size="large">
-                  My Decks
-                </Button>
-              </Link>
-            </Col>
-
-            <Col xs={6}>
-              <Link to="/Settings">
-                <Button className="w-100" size="large">
-                  Settings
-                </Button>
-              </Link>
-            </Col>
-
           </Row>
-        </Col>
-      </Row>
-    </Container>
+          <Row justify="center" style={{ marginTop: "30px" }}>
+            <Col xs={24} md={16}>
+              <Row gutter={[16, 16]} justify="space-around">
+                <Col xs={12}>
+                  <Link to="/MyCollection">
+                    <Button
+                      type="default"
+                      block
+                      size="large"
+                      className="customButton"
+                      style={{ boxShadow: "0 4px 12px" }}
+                    >
+                      Card Collection
+                    </Button>
+                  </Link>
+                </Col>
+
+                <Col xs={12}>
+                  <Link to="/MyDecks">
+                    <Button
+                      type="default"
+                      block
+                      size="large"
+                      className="customButton"
+                      style={{ boxShadow: "0 4px 12px" }}
+                    >
+                      My Decks
+                    </Button>
+                  </Link>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Content>
+      </div >
+    </>
   );
 };
 

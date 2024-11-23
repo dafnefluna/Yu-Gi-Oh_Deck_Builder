@@ -137,6 +137,7 @@ const SearchPage = () => {
 
     return (
         <>
+            <div className='backgroundStyle'></div>
             <div className='text-light bg-dark p-5'>
                 <Container>
                     <h1>Yu-Gi-Oh Deck Builder</h1>
@@ -178,21 +179,21 @@ const SearchPage = () => {
                 <h2 className='pt-5'>
                     {searchedCards.length
                         ? `Viewing ${searchedCards.length} results:`
-                        : 'Search for a card to begin'}
+                        : ""}
                 </h2>
-                
-                <CardList cards = {currentCards}/>
 
-                <div className ='d-flex justify-content-center mt-4 mb-4 pagination-container'>
+                <CardList cards={currentCards} />
+
+                <div className='d-flex justify-content-center mt-4 mb-4 pagination-container'>
                     <Pagination
-                        hideOnSinglePage = {true}
+                        hideOnSinglePage={true}
                         pageSize={currentCardsPer}
-                        total = {totalPages}
+                        total={totalPages}
                         current={currentPage}
                         showSizeChanger={true}
                         pageSizeOptions={['6', '12', '18', '24']}
                         onChange={onPageChange}
-                        size= {'default'}
+                        size={'default'}
                     />
                 </div>
             </Container>

@@ -34,8 +34,8 @@ const typeDefs = gql`
         name: String
         type: String
         description: String
-        attack: Int
-        defense: Int
+        atk: Int
+        def: Int
         level: Int
         attribute: String
         race: String
@@ -95,6 +95,7 @@ const typeDefs = gql`
         updateDeckName(deckId: String!, input: DeckInput): Deck
         deleteCardFromUser(cardId: ID!): User
         deleteCard(cardId: ID!): Card
+        deleteDeck(deckId: ID!):Deck
     }
 `
 export default typeDefs;
