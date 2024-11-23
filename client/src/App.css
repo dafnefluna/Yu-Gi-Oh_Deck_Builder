@@ -1,5 +1,5 @@
 body {
-  font-family: 'Rubik', sans-serif;
+  font-family: 'Andika', sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -10,7 +10,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Rubik Mono One', sans-serif;
+  font-family: 'Andika', sans-serif;
 }
 
 .small {
@@ -141,4 +141,11 @@ h6 {
 .btn-group {
   background-color: #0f1a26;
   color: white;
+  font-family: 'Andika', sans-serif;
+}
+
+#collectiontitle {
+  background-color: #0f1a26;
+  color: white;
+  line-height: 1.5;
 }
