@@ -67,23 +67,26 @@ export const QUERY_ME = gql`
   }
 }`;
 
-export const QUERY_GETALLCARDS =  gql `
-    query AllCards {
-  allCards {
-    _id
-    name
-    type
-    description
-    attack
-    defense
-    level
-    attribute
-    race
-    archetype
-    image
-  }
-}
+export const QUERY_GETALLCARDS = gql`
+    query AllCards($username: String!) {
+        user(username: $username) {
+            savedCards {
+                _id
+                name
+                type
+                description
+                attack
+                defense
+                level
+                attribute
+                race
+                archetype
+                image
+            }
+        }
+    }
 `;
+
 
 export const QUERY_GETALLDECKS = gql `
 query AllDecks {

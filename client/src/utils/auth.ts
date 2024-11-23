@@ -2,7 +2,7 @@ import { jwtDecode, JwtPayload } from "jwt-decode";
 
 interface ExtendedJwt extends JwtPayload {
     data: {
-        name: string,
+        username: string,
         exp: number,
     }
 };
@@ -10,6 +10,16 @@ interface ExtendedJwt extends JwtPayload {
 class AuthService {
     getProfile() {
         return jwtDecode<ExtendedJwt>(this.getToken());
+    }
+
+    getUsername() {
+        const token = this.getToken();
+        console.log('Token:', token);  // Add this log for debugging
+        if (!token) return null;
+        
+        const decoded = jwtDecode<ExtendedJwt>(token);
+        console.log('Decoded JWT:', decoded);  // Add this log for debugging
+        return decoded?.data?.username;
     }
 
     loggedIn() {
