@@ -71,7 +71,6 @@ const CardCollectionPage: React.FC = () => {
             </div>
         );
     }
-
     if (cardLoading) return <p>Loading...</p>;
     if (cardError) return <p>Error loading card data: {cardError.message}</p>;
 

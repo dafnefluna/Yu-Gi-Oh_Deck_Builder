@@ -52,7 +52,7 @@ const LandingPage: React.FC = () => {
 
       // Check for duplicate key error (MongoDB E11000 error code)
       if (error?.message.includes("E11000 duplicate key error")) {
-        setErrorMessage("Username already exists");
+        setErrorMessage("User already exists"); //change to where it says whether username or email exists later
       } else {
         setErrorMessage("Signup failed. Please try again.");
       }
