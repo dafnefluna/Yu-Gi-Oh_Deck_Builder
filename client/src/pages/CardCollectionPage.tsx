@@ -1,10 +1,13 @@
 import Accordion from 'react-bootstrap/Accordion';
 import { Container, Card, Col, Row } from 'react-bootstrap';
+import { Button } from "antd";
 import { Cards } from '../interfaces/Card.js'
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_GETALLCARDS } from '../utils/queries.js';
 import CardtoDeck from '../components/CardToDeck.js';
+import { Link } from "react-router-dom";
+import Auth from "../utils/auth";
 
 
 const CardCollectionPage: React.FC = () => {
@@ -30,6 +33,35 @@ const CardCollectionPage: React.FC = () => {
     };
 
     const [group1, group2, group3] = splitIntoThreeGroups(cards || []);
+
+    const isLoggedIn = Auth.loggedIn(); // Assuming this method returns true/false
+
+    if (!isLoggedIn) {
+        return (
+          <div className="containerPage">
+            <Card
+              style={{
+                width: 400,
+                textAlign: "center",
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                backgroundColor: "#f0f2f5",
+              }}
+            ><h2 style={{color: "yellow", background: "black", borderRadius: "10px",}}>Whoah! You've gone BANANAS! Please log in before viewing saved cards 🍌</h2>
+              <iframe
+                src="https://giphy.com/embed/H8uuXYln5pxVVLFn7k"
+                height="270"
+                frameBorder="0"
+                allowFullScreen
+                title="Bananas GIF"
+                style={{ marginBottom: "16px", width: "100%" }}
+              ></iframe>
+              <Link to="/">
+                <Button type="primary">Go to Login Page</Button>
+              </Link>
+            </Card>
+          </div>
+        );
+      }  
 
     return (
         <>

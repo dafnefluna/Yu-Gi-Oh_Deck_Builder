@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Card, Accordion, Modal, Button } from 'react-bootstrap';
+import { Row, Col, Card, Accordion, Modal, Button, Container } from 'react-bootstrap';
 import { Decks } from '../interfaces/Deck.js';
 import CardBack from '../assets/button.png';
 
@@ -21,21 +21,32 @@ const DeckList: React.FC<DeckListProps> = ({ decks }) => {
         setSelectedCard(null);
     };
 
+    const splitIntoThreeGroups = (arr: Decks[]) => {
+        const groupSize = Math.ceil(arr.length / 3);
+        return [arr.slice(0, groupSize), arr.slice(groupSize, groupSize * 2), arr.slice(groupSize * 2)];
+    };
+
+    const [group1, group2, group3] = splitIntoThreeGroups(decks || []);
+
+
+
     return (
         <>
-            <Row>
-                {decks.map((deck) => (
-                    <Col md="4" key={deck.id}>
-                        <Accordion>
-                            <Accordion.Item eventKey={`${deck.id}-header`}>
+            <div className='backgroundStyle'></div>
+            <Container className="text-center my-4">
+                <Row>
+                <Col xs={12} md={4} class='accordion'>
+                <Accordion >
+                {group1.map((deck, index) => (
+                            <Accordion.Item eventKey={index.toString()} key={deck.id}>
                                 <Accordion.Header>
-                                    <Card border="dark">
+                                    <Card border="dark" style={{ position: 'relative', width: '100%' }} >
                                         <div style={{ position: 'relative', width: '100%' }}>
                                             <Card.Img
                                                 src={CardBack}
                                                 alt={`YuGiOh deck image`}
                                                 variant="top"
-                                                style={{ display: 'block', width: '100%', height: 'auto' }}
+                                                // style={{ display: 'block', width: '100%', height: 'auto' }}
                                             />
                                             <div
                                                 style={{
@@ -47,7 +58,7 @@ const DeckList: React.FC<DeckListProps> = ({ decks }) => {
                                                     backgroundColor: 'rgba(0, 0, 0, 0.6)',
                                                     padding: '5px 10px',
                                                     borderRadius: '5px',
-                                                    fontSize: '3em',
+                                                    fontSize: '2.3em',
                                                     fontWeight: 'bold',
                                                     textAlign: 'center',
                                                 }}
@@ -88,12 +99,145 @@ const DeckList: React.FC<DeckListProps> = ({ decks }) => {
                                         ))}
                                     </Row>
                                 </Accordion.Body>
-                            </Accordion.Item>
+                            </Accordion.Item>))}
                         </Accordion>
                     </Col>
-                ))}
+                    <Col xs={12} md={4} class='accordion'>
+                <Accordion >
+                {group2.map((deck, index) => (
+                            <Accordion.Item eventKey={index.toString()} key={deck.id}>
+                                <Accordion.Header>
+                                    <Card border="dark">
+                                        <div style={{ position: 'relative', width: '100%' }}>
+                                            <Card.Img
+                                                src={CardBack}
+                                                alt={`YuGiOh deck image`}
+                                                variant="top"
+                                                style={{ display: 'block', width: '100%', height: 'auto' }}
+                                            />
+                                            <div
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: '50%',
+                                                    left: '50%',
+                                                    transform: 'translate(-50%, -50%)',
+                                                    color: 'white',
+                                                    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                                                    padding: '5px 10px',
+                                                    borderRadius: '5px',
+                                                    fontSize: '2.3em',
+                                                    fontWeight: 'bold',
+                                                    textAlign: 'center',
+                                                }}
+                                            >
+                                                {deck.name}
+                                            </div>
+                                        </div>
+                                        <Card.Body>
+                                            <Card.Text>
+                                                Playable?: {deck.playable ? 'yes' : 'no'}
+                                            </Card.Text>
+                                            <Card.Text>Type: {deck.type}</Card.Text>
+                                        </Card.Body>
+                                    </Card>
+                                </Accordion.Header>
+                                <Accordion.Body>
+                                    <Row>
+                                        {deck.cards?.map((card) => (
+                                            <Col md="4" sm="6" xs="12" key={card.id} className="mb-4">
+                                                <Card
+                                                    border="dark"
+                                                    onClick={() => handleCardClick(card)}
+                                                    style={{ cursor: 'pointer' }}
+                                                >
+                                                    {card.image && (
+                                                        <Card.Img
+                                                            src={card.image}
+                                                            alt={`Art for ${card.name}`}
+                                                            variant="top"
+                                                            style={{ maxHeight: '100px', objectFit: 'contain' }}
+                                                        />
+                                                    )}
+                                                    <Card.Body>
+                                                        <Card.Text>{card.name}</Card.Text>
+                                                    </Card.Body>
+                                                </Card>
+                                            </Col>
+                                        ))}
+                                    </Row>
+                                </Accordion.Body>
+                            </Accordion.Item>))}
+                        </Accordion>
+                    </Col>
+                    <Col xs={12} md={4} class='accordion'>
+                <Accordion >
+                {group3.map((deck, index) => (
+                            <Accordion.Item eventKey={index.toString()} key={deck.id}>
+                                <Accordion.Header>
+                                    <Card border="dark">
+                                        <div style={{ position: 'relative', width: '100%' }}>
+                                            <Card.Img
+                                                src={CardBack}
+                                                alt={`YuGiOh deck image`}
+                                                variant="top"
+                                                style={{ display: 'block', width: '100%', height: 'auto' }}
+                                            />
+                                            <div
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: '50%',
+                                                    left: '50%',
+                                                    transform: 'translate(-50%, -50%)',
+                                                    color: 'white',
+                                                    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                                                    padding: '5px 10px',
+                                                    borderRadius: '5px',
+                                                    fontSize: '2.3em',
+                                                    fontWeight: 'bold',
+                                                    textAlign: 'center',
+                                                }}
+                                            >
+                                                {deck.name}
+                                            </div>
+                                        </div>
+                                        <Card.Body>
+                                            <Card.Text>
+                                                Playable?: {deck.playable ? 'yes' : 'no'}
+                                            </Card.Text>
+                                            <Card.Text>Type: {deck.type}</Card.Text>
+                                        </Card.Body>
+                                    </Card>
+                                </Accordion.Header>
+                                <Accordion.Body>
+                                    <Row>
+                                        {deck.cards?.map((card) => (
+                                            <Col md="4" sm="6" xs="12" key={card.id} className="mb-4">
+                                                <Card
+                                                    border="dark"
+                                                    onClick={() => handleCardClick(card)}
+                                                    style={{ cursor: 'pointer' }}
+                                                >
+                                                    {card.image && (
+                                                        <Card.Img
+                                                            src={card.image}
+                                                            alt={`Art for ${card.name}`}
+                                                            variant="top"
+                                                            style={{ maxHeight: '100px', objectFit: 'contain' }}
+                                                        />
+                                                    )}
+                                                    <Card.Body>
+                                                        <Card.Text>{card.name}</Card.Text>
+                                                    </Card.Body>
+                                                </Card>
+                                            </Col>
+                                        ))}
+                                    </Row>
+                                </Accordion.Body>
+                            </Accordion.Item>))}
+                        </Accordion>
+                    </Col>
             </Row>
-
+</Container>
             {/* Modal */}
             {selectedCard && (
                 <Modal show={showModal} onHide={handleCloseModal} centered>
