@@ -21,8 +21,8 @@ const typeDefs = gql`
         name: String
         type: String
         description: String
-        attack: Int
-        defense: Int
+        atk: Int
+        def: Int
         level: Int
         attribute: String
         race: String

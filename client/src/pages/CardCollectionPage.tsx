@@ -13,7 +13,6 @@ const CardCollectionPage: React.FC = () => {
     const [cards, setCards] = useState<Cards[] | null>(null);
     
     const username = Auth.getUsername();
-    // console.log('Username:', username);
 
     const { data: cardDataQuery, loading: cardLoading, error: cardError } = useQuery(QUERY_GETALLCARDS, {
         variables: { username },
@@ -24,9 +23,6 @@ const CardCollectionPage: React.FC = () => {
             setCards(cardDataQuery.user.savedCards);
         }
     }, [cardDataQuery]);
-
-    // console.log(cards);
-    
 
     // Function to handle card removal
     const handleCardRemoved = (removedCardId: string) => {
@@ -71,6 +67,7 @@ const CardCollectionPage: React.FC = () => {
             </div>
         );
     }
+
     if (cardLoading) return <p>Loading...</p>;
     if (cardError) return <p>Error loading card data: {cardError.message}</p>;
 
@@ -88,7 +85,7 @@ const CardCollectionPage: React.FC = () => {
                                 <Card.Text>ATR: {card.attribute} | Level: {card.level}</Card.Text>
                                 <Card.Text>[{card.race} / {card.type}]</Card.Text>
                                 <Card.Text>{card.description}</Card.Text>
-                                <Card.Text>ATK: {card.attack} | DEF: {card.defense}</Card.Text>
+                                <Card.Text>ATK: {card.atk} | DEF: {card.def}</Card.Text>
                                 <CardtoDeck card={card} />
                                 <RemoveCardFromCollection
                                     cardId={card._id || ''}
@@ -102,11 +99,25 @@ const CardCollectionPage: React.FC = () => {
         </Accordion>
     );
 
+    // If no cards are saved, show a message with a button to search for cards
+    if (cards?.length === 0) {
+        return (
+            <Card className="containerPage text-center backgroundStyle">
+                <h2 style={{background: "white"}}>No cards saved in your collection!</h2>
+                <p style={{background: "white"}}>Search for a new card to save!</p>
+                <Link to="/Search">
+                    <Button type="primary">Search For Cards</Button>
+                </Link>
+            </Card>
+        );
+    }
+console.log("card data:",cards);
+
     return (
         <>
             <div className="backgroundStyle"></div>
             <Container className="text-center my-4">
-                <h2>My Yu-Gi-Oh Collection</h2>
+                <h2 style={{background: "white", display: "inline-block"}}>My Yu-Gi-Oh Collection</h2>
                 <Row>
                     {groups.map((group, index) => (
                         <Col xs={12} md={4} key={index}>

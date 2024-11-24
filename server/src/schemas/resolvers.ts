@@ -36,8 +36,8 @@ interface AddCardArg {
         name: string
         type: string
         description: string
-        attack: number
-        defense: number
+        atk: number
+        def: number
         level: number
         attribute: string
         race: string
@@ -77,7 +77,13 @@ interface updateDeckArg {
 const resolvers = {
     Query: {
         user: async (_parent: any, { username }: UserArgs): Promise<IUser | null> => {
-            return User.findOne({ username }).populate("savedCards").populate("allDecks");
+            return User.findOne({ username }).populate("savedCards").populate({
+                path: 'allDecks',  // Populating the allDecks field
+                populate: {
+                    path: 'cards',  // Populating the cards field inside each deck
+                    model: 'Card',  // Referencing the Card model
+                }
+            });
         },
         me: async (_parent: any, _args: any, context: any) => {
             // If the user is authenticated, find and return the user's information

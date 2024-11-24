@@ -6,8 +6,8 @@ export interface ICard extends Document {
 name: string;
 type: string;
 description: string;
-attack?: number;
-defense?: number;
+atk?: number;
+def?: number;
 level?: number;
 attribute?: string;
 race?: string;
@@ -29,11 +29,11 @@ const cardSchema = new Schema<ICard>(
             type: String,
             required: true,
         },
-        attack:{
+        atk:{
             type: Number,
             required: false,
         },
-        defense:{
+        def:{
             type: Number,
             required: false,
         },

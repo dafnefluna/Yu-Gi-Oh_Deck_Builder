@@ -6,6 +6,8 @@ import Auth from "../utils/auth";
 
 const userId = Auth.getUserId();
 
+const username = Auth.getUsername();
+
 const UpdateDeck = ({ deckId }: { deckId: string }) => {
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
@@ -17,7 +19,12 @@ const UpdateDeck = ({ deckId }: { deckId: string }) => {
 console.log('This is the deck:', deckId);
 
     const [updateDeck, { loading, error }] = useMutation(UPDATE_DECK_DETAILS, {
-        refetchQueries: [{ query: QUERY_GETALLDECKS }], // Refetch decks query
+        refetchQueries: [
+            {
+                query: QUERY_GETALLDECKS,
+                variables: { username }, // Add the username variable here
+            },
+        ], // Refetch decks query
         onCompleted: () => {
             setShowModal(false);
             console.log("Deck updated successfully!");

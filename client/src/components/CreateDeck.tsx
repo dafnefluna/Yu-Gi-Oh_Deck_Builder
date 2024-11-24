@@ -6,6 +6,8 @@ import Auth from "../utils/auth";
 
 const userId = Auth.getUserId();
 
+const username = Auth.getUsername();
+
 const CreateDeck = () => {
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
@@ -16,7 +18,12 @@ const CreateDeck = () => {
     });
 
     const [createDeck, { loading, error }] = useMutation(CREATE_NEW_DECK, {
-        refetchQueries: [{ query: QUERY_GETALLDECKS }], // Refetch decks query
+        refetchQueries: [
+            {
+                query: QUERY_GETALLDECKS,
+                variables: { username }, // Add the username variable here
+            },
+        ], // Refetch decks query with the username variable
         onCompleted: () => {
             setShowModal(false);
             console.log("Deck created successfully!");

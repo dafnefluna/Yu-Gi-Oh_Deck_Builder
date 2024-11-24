@@ -3,17 +3,25 @@ import { useMutation } from '@apollo/client';
 import { Button, Modal } from 'react-bootstrap';
 import { DELETE_DECK } from '../utils/mutations';
 import { QUERY_GETALLDECKS } from '../utils/queries'; // Assuming you are refetching the decks
+import Auth from "../utils/auth";
 
 interface DeleteDeckProps {
   deckId: string;
   deckName: string;
 }
 
+const username = Auth.getUsername();
+
 const DeleteDeck: React.FC<DeleteDeckProps> = ({ deckId, deckName }) => {
   const [showModal, setShowModal] = useState(false); // To toggle the modal visibility
   const [deleteDeck] = useMutation(DELETE_DECK, {
     variables: { deckId }, // Pass the deckId to the mutation
-    refetchQueries: [{ query: QUERY_GETALLDECKS }], // Refetch all decks after deleting
+    refetchQueries: [
+      {
+          query: QUERY_GETALLDECKS,
+          variables: { username }, // Add the username variable here
+      },
+  ], // Refetch all decks after deleting
     onCompleted: () => {
       setShowModal(false); // Close modal on success
       console.log('Deck deleted successfully');

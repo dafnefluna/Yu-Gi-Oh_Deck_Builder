@@ -271,8 +271,8 @@ console.log(decks);
                         <Card.Text>Race: {selectedCard.race}</Card.Text>
                         <Card.Text>Type: {selectedCard.type}</Card.Text>
                         <Card.Text>{selectedCard.description}</Card.Text>
-                        <Card.Text>ATK: {selectedCard.attack}</Card.Text>
-                        <Card.Text>DEF: {selectedCard.defense}</Card.Text>
+                        <Card.Text>ATK: {selectedCard.atk}</Card.Text>
+                        <Card.Text>DEF: {selectedCard.def}</Card.Text>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleCloseModal}>

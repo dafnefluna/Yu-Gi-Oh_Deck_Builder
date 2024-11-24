@@ -36,8 +36,8 @@ export const SAVE_NEW_CARD = gql`
     name
     type
     description
-    attack
-    defense
+    atk
+    def
     level
     attribute
     race
@@ -105,13 +105,15 @@ export const UPDATE_DECK_DETAILS = gql`
 export const DELETE_CARD_FROM_USER = gql`
 mutation DeleteCardFromUser($cardId: ID!) {
   deleteCardFromUser(cardId: $cardId) {
+    _id
+    username
     savedCards {
       _id
       name
       type
       description
-      attack
-      defense
+      atk
+      def
       level
       attribute
       race
@@ -126,6 +128,7 @@ mutation DeleteCardFromUser($cardId: ID!) {
         _id
       }
       type
+      user
     }
   }
 }
