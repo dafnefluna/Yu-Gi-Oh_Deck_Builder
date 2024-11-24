@@ -8,6 +8,6 @@ export interface Cards {
     type: string;
     archetype: string;
     description: string;
-    attack: number;
-    defense: number;
+    atk: number;
+    def: number;
 }

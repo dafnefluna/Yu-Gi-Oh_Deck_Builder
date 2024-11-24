@@ -1,14 +1,15 @@
 import { gql } from '@apollo/client';
 
 export const LOGIN_USER = gql`
-    mutation login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
+    mutation Login($username: String!, $password: String!) {
+  login(username: $username, password: $password) {
     token
     user {
-        _id
-        username
+      _id
+      username
+      email
     }
-    }
+  }
 }
 `;
 
@@ -18,11 +19,13 @@ export const ADD_USER = gql`
   addUser(input: $input) {
     token
     user {
-        _id
-        username
+      _id
+      username
+      email
     }
   }
 }
+
 `;
 
 // todo: do we add the _id or not. Maybe not bc its the solution the problem
@@ -33,8 +36,8 @@ export const SAVE_NEW_CARD = gql`
     name
     type
     description
-    attack
-    defense
+    atk
+    def
     level
     attribute
     race
@@ -50,8 +53,11 @@ export const ADD_CARD_TO_DECK = gql`
     _id
     name
     playable
-    cards
+    cards {
+      _id
+    }
     type
+    user
   }
 }
 `;
@@ -62,8 +68,11 @@ export const CREATE_NEW_DECK = gql`
     _id
     name
     playable
-    cards
+    cards {
+      _id
+    }
     type
+    user
   }
 }
 `;
@@ -85,7 +94,9 @@ export const UPDATE_DECK_DETAILS = gql`
     _id
     name
     playable
-    cards
+    cards {
+      _id
+    }
     type
   }
 }
@@ -96,14 +107,13 @@ mutation DeleteCardFromUser($cardId: ID!) {
   deleteCardFromUser(cardId: $cardId) {
     _id
     username
-    email
     savedCards {
       _id
       name
       type
       description
-      attack
-      defense
+      atk
+      def
       level
       attribute
       race
@@ -118,6 +128,26 @@ mutation DeleteCardFromUser($cardId: ID!) {
         _id
       }
       type
+      user
+    }
+  }
+}
+`;
+
+export const DELETE_DECK = gql`
+mutation DeleteDeck($deckId: ID!) {
+  deleteDeck(deckId: $deckId) {
+    _id
+    username
+    allDecks {
+      _id
+      name
+      playable
+      cards {
+        _id
+      }
+      type
+      user
     }
   }
 }

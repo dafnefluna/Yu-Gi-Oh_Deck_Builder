@@ -5,15 +5,21 @@ import { Decks } from '../interfaces/Deck.js';
 import { ADD_CARD_TO_DECK, SAVE_NEW_CARD } from '../utils/mutations.js';
 import { useMutation, useQuery } from '@apollo/client';
 import { QUERY_GETALLDECKS } from '../utils/queries.js';
+import Auth from "../utils/auth";
 
 interface CardtoDeckProps {
     card: Cards;
 }
 
+const username = Auth.getUsername();
+
 const CardtoDeck: React.FC<CardtoDeckProps> = ({ card }) => {
     const [selectedOption, setSelectedOption] = useState<string | null>(null); // Tracks selected "Save Card" option
     const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null); // Tracks selected deck
-    const { data: deckDataQuery, loading: deckLoading, error: deckError } = useQuery(QUERY_GETALLDECKS);
+    const [statusMessage, setStatusMessage] = useState<string | null>(null); // Tracks status message
+    const { data: deckDataQuery, loading: deckLoading, error: deckError } = useQuery(QUERY_GETALLDECKS, {
+        variables: { username }
+    });
 
     const [addCardToDeckMutation] = useMutation(ADD_CARD_TO_DECK);
     const [addCardToUserMutation] = useMutation(SAVE_NEW_CARD);
@@ -29,9 +35,10 @@ const CardtoDeck: React.FC<CardtoDeckProps> = ({ card }) => {
 
     const handleSubmit = async () => {
         let cardId = card._id;
+        console.log('here is the card data:', card);
     
-        // If the card doesn't have an _id yet (new card), save it first
-        if (!cardId && selectedOption === '2') {
+        // Save new card if needed
+        if (!cardId && selectedOption) {
             const { data } = await addCardToUserMutation({
                 variables: {
                     input: {
@@ -42,41 +49,41 @@ const CardtoDeck: React.FC<CardtoDeckProps> = ({ card }) => {
                         type: card.type,
                         archetype: card.archetype,
                         description: card.description,
-                        atk: card.attack,
-                        def: card.defense,
+                        atk: card.atk,
+                        def: card.def,
                         image: card.image,
                     },
                 },
             });
             cardId = data.addCardToUser._id;
         }
-    console.log(`here is the deck data:`, deckDataQuery);
     
-        // Find the deck by name in the allDecks array
-        const selectedDeck = deckDataQuery?.allDecks.find((deck: Decks) => deck.name === selectedDeckId);
+        console.log(`here is the deck data:`, deckDataQuery);
+    
+        // Find the selected deck by ID
+        const selectedDeck = deckDataQuery?.user.allDecks.find((deck: Decks) => deck._id === selectedDeckId);
         console.log(`here is the selected deck:`, selectedDeck);
-
-        // Perform the mutation based on the selected option
+    
         if (selectedOption === '1') {
+            setStatusMessage("Card Added To Collection");
             console.log('Card Saved to My Collection');
-            // Call SAVE_NEW_CARD mutation here if needed, if the card was not added already
         } else if (selectedOption === '2' && selectedDeck) {
             console.log(`here is the deckId: ${selectedDeck._id}`);
             console.log(`here is the cardId: ${cardId}`);
     
-            // Add the card to the selected deck
             await addCardToDeckMutation({
                 variables: {
-                    deckId: selectedDeck._id,  // Use the deck's id here
+                    deckId: selectedDeck._id,
                     cardId: cardId,
                 },
             });
+            setStatusMessage("Card Added to Deck");
             console.log('Card added to existing deck successfully');
         } else {
             console.error('No deck selected');
+            setStatusMessage(null);
         }
     };
-    
 
     if (deckLoading) return <p>Loading...</p>;
     if (deckError) return <p>Error loading deck data: {deckError.message}</p>;
@@ -94,7 +101,7 @@ const CardtoDeck: React.FC<CardtoDeckProps> = ({ card }) => {
             </Form.Group>
 
             {/* If "To Existing Deck" is selected, show the deck selection */}
-            {selectedOption === '2' && deckDataQuery?.allDecks && (
+            {selectedOption === '2' && deckDataQuery?.user.allDecks && (
                 <Form.Group controlId="selectDeck">
                     <Form.Label style={{paddingTop: "10px"}}>Select Deck:</Form.Label>
                     <Form.Control
@@ -103,15 +110,20 @@ const CardtoDeck: React.FC<CardtoDeckProps> = ({ card }) => {
                         onChange={(e) => setSelectedDeckId(e.target.value)}
                     >
                         <option value="">Select a deck</option>
-                        {deckDataQuery.allDecks.map((deck: Decks) => (
-                            <option key={deck.id} value={deck.id}> {/* Pass the deck.id */}
+                        {deckDataQuery.user.allDecks.map((deck: Decks) => (
+                            <option key={deck._id} value={deck._id}> {/* Pass the deck.id */}
                                 {deck.name} {/* Display deck name */}
                             </option>
                         ))}
                     </Form.Control>
                 </Form.Group>
             )}
-<div style={{paddingTop: "10px"}}></div>
+
+            <div style={{paddingTop: "10px"}}></div>
+
+            {/* Status Message */}
+            {statusMessage && <p style={{ color: "green", marginBottom: "10px" }}>{statusMessage}</p>}
+
             {/* Submit button */}
             <Button variant="primary" onClick={handleSubmit}>
                 Submit

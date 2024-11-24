@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Row, Col, Card, Accordion, Modal, Button, Container } from 'react-bootstrap';
 import { Decks } from '../interfaces/Deck.js';
 import CardBack from '../assets/button.png';
+import UpdateDeck from "../components/UpdateDeck";
+import DeleteDeck from './DeleteDeck.js';
 
 interface DeckListProps {
     decks: Decks[];
@@ -9,8 +11,9 @@ interface DeckListProps {
 
 const DeckList: React.FC<DeckListProps> = ({ decks }) => {
     const [showModal, setShowModal] = useState(false);
+    // eslint-disable-next-line
     const [selectedCard, setSelectedCard] = useState<any>(null);
-
+    // eslint-disable-next-line
     const handleCardClick = (card: any) => {
         setSelectedCard(card);
         setShowModal(true);
@@ -39,7 +42,7 @@ console.log(decks);
                 <Col xs={12} md={4} class='accordion'>
                 <Accordion >
                 {group1.map((deck, index) => (
-                            <Accordion.Item eventKey={index.toString()} key={deck.id}>
+                            <Accordion.Item eventKey={index.toString()} key={deck._id}>
                                 <Accordion.Header>
                                     <Card border="dark" style={{ position: 'relative', width: '100%' }} >
                                         <div style={{ position: 'relative', width: '100%' }}>
@@ -99,6 +102,9 @@ console.log(decks);
                                             </Col>
                                         ))}
                                     </Row>
+                                    <UpdateDeck deckId={deck._id} />
+                                    <div style={{padding: "10px"}}></div>
+                                    <DeleteDeck deckId={deck._id} deckName={deck.name} />
                                 </Accordion.Body>
                             </Accordion.Item>))}
                         </Accordion>
@@ -106,7 +112,7 @@ console.log(decks);
                     <Col xs={12} md={4} class='accordion'>
                 <Accordion >
                 {group2.map((deck, index) => (
-                            <Accordion.Item eventKey={index.toString()} key={deck.id}>
+                            <Accordion.Item eventKey={index.toString()} key={deck._id}>
                                 <Accordion.Header>
                                     <Card border="dark">
                                         <div style={{ position: 'relative', width: '100%' }}>
@@ -166,6 +172,9 @@ console.log(decks);
                                             </Col>
                                         ))}
                                     </Row>
+                                    <UpdateDeck deckId={deck._id} />
+                                    <div style={{padding: "10px"}}></div>
+                                    <DeleteDeck deckId={deck._id} deckName={deck.name} />
                                 </Accordion.Body>
                             </Accordion.Item>))}
                         </Accordion>
@@ -173,7 +182,7 @@ console.log(decks);
                     <Col xs={12} md={4} class='accordion'>
                 <Accordion >
                 {group3.map((deck, index) => (
-                            <Accordion.Item eventKey={index.toString()} key={deck.id}>
+                            <Accordion.Item eventKey={index.toString()} key={deck._id}>
                                 <Accordion.Header>
                                     <Card border="dark">
                                         <div style={{ position: 'relative', width: '100%' }}>
@@ -233,6 +242,9 @@ console.log(decks);
                                             </Col>
                                         ))}
                                     </Row>
+                                    <UpdateDeck deckId={deck._id} />
+                                    <div style={{padding: "10px"}}></div>
+                                    <DeleteDeck deckId={deck._id} deckName={deck.name} />
                                 </Accordion.Body>
                             </Accordion.Item>))}
                         </Accordion>
@@ -259,8 +271,8 @@ console.log(decks);
                         <Card.Text>Race: {selectedCard.race}</Card.Text>
                         <Card.Text>Type: {selectedCard.type}</Card.Text>
                         <Card.Text>{selectedCard.description}</Card.Text>
-                        <Card.Text>ATK: {selectedCard.attack}</Card.Text>
-                        <Card.Text>DEF: {selectedCard.defense}</Card.Text>
+                        <Card.Text>ATK: {selectedCard.atk}</Card.Text>
+                        <Card.Text>DEF: {selectedCard.def}</Card.Text>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleCloseModal}>

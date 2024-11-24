@@ -7,18 +7,23 @@ import { QUERY_GETALLDECKS } from '../utils/queries';
 import DeckList from '../components/DeckLayout';
 import Auth from "../utils/auth";
 import { Link } from "react-router-dom";
+import CreateDeck from "../components/CreateDeck";
 
 const DeckPage: React.FC = () => {
     const [decks, setDecks] = useState<Decks[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [currentCardsPer, setCardsPer] = useState(6);
 
-    const { data: deckDataQuery, loading: deckLoading, error: deckError } = useQuery(QUERY_GETALLDECKS);
+    const username = Auth.getUsername();
+
+    const { data: deckDataQuery, loading: deckLoading } = useQuery(QUERY_GETALLDECKS, {
+      variables: {username}
+    });
 
     useEffect(() => {
         if (deckDataQuery) {
             console.log('Deck Data Query:', deckDataQuery);
-            setDecks(deckDataQuery?.allDecks || []);
+            setDecks(deckDataQuery?.user.allDecks || []);
         }
     }, [deckDataQuery]);
 
@@ -27,7 +32,7 @@ const DeckPage: React.FC = () => {
     }, []);
 
     if (deckLoading) return <p>Loading...</p>;
-    if (deckError) return <p>Error loading deck data: {deckError.message}</p>;
+    // if (deckError) return <p>Error loading deck data: {deckError.message}</p>;
 
     const lastIndex = currentPage * currentCardsPer;
     const firstIndex = lastIndex - currentCardsPer;
@@ -74,7 +79,7 @@ const DeckPage: React.FC = () => {
                     ? `You have ${decks.length} decks:`
                     : `Please create a deck first!`}
             </h2>
-
+<CreateDeck></CreateDeck>
             <DeckList decks={currentDecks} />
 
             <div className="d-flex justify-content-center mt-4 mb-4 pagination-container">

@@ -8,7 +8,9 @@ interface CardListProps {
     cards: Cards[];
 }
 
-const CardList: React.FC<CardListProps> = ({ cards }) => (
+const CardList: React.FC<CardListProps> = ({ cards }) => {
+    console.log('cards being rendered in CardList:',cards);
+    return (
     <Row>
         {cards.map((card) => {
             return (
@@ -22,7 +24,7 @@ const CardList: React.FC<CardListProps> = ({ cards }) => (
                             <Card.Text>ATR: {card.attribute} | Level: {card.level}</Card.Text>
                             <Card.Text>[{card.race} / {card.type}]</Card.Text>
                             <Card.Text>{card.description}</Card.Text>
-                            <Card.Text>ATK: {card.attack} | DEF: {card.defense}</Card.Text>
+                            <Card.Text>ATK: {card.atk} | DEF: {card.def}</Card.Text>
                             {Auth.loggedIn() && (
                                 <><CardtoDeck card={card}/></>
                             )}
@@ -32,7 +34,7 @@ const CardList: React.FC<CardListProps> = ({ cards }) => (
             );
         })}
     </Row>
-);
+)};
 
 // disabled={savedCardIds?.some((savedCardId: string) => savedCardId === card.name)}
 // className='btn-block btn-info'

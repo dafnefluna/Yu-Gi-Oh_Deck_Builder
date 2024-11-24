@@ -10,11 +10,11 @@ import {QUERY_ME} from '../utils/queries.js';
 const { Content } = Layout;
 
 const UserPage = () => {
-  const { loading: userLoading, error: userError, data } = useQuery(QUERY_ME)
+  const { loading: userLoading, data } = useQuery(QUERY_ME)
 
 
   if (userLoading) return <p>Loading...</p>;
-  if (userError) return <p>Error loading user data: {userError.message}</p>;
+  // if (userError) return <p>Error loading user data: {userError.message}</p>;
 
   const { username } = data?.me || {};
   console.log(username);

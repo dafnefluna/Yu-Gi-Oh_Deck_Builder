@@ -48,6 +48,9 @@ const SearchPage = () => {
 
             const { data } = await response.json();
             // console.log(data);
+console.log("here is the api data:",data);
+console.log("here is the searched card data:",searchedCards);
+
 
             const cardData = data.map((card: YuGiOhCard) => ({
                 cardId: card.id,
@@ -59,8 +62,8 @@ const SearchPage = () => {
                 type: card.type,
                 archetype: card.archetype,
                 description: card.desc,
-                attack: card.atk,
-                defense: card.def,
+                atk: card.atk,
+                def: card.def,
             }));
             // console.log(cardData);
 
