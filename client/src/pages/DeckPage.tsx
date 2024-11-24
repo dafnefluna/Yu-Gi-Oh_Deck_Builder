@@ -74,9 +74,9 @@ const DeckPage: React.FC = () => {
   }  
   return (
         <Container>
-            <h2 className="pt-5" style={{display: "flex", justifyContent:"center"}}>
+            <h2 style={{background: "white", display: "flex", justifyContent:"center"}}>
                 {decks.length
-                    ? `You have ${decks.length} decks:`
+                    ? `You have ${decks.length} deck(s):`
                     : `Please create a deck first!`}
             </h2>
 <CreateDeck></CreateDeck>

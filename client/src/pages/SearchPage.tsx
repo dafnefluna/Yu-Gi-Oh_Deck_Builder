@@ -1,7 +1,4 @@
 import { FormEvent, useState } from 'react';
-// import fs from 'fs';
-// import path from 'path';
-
 import {
     Container,
     Col,
@@ -11,26 +8,18 @@ import {
 } from 'react-bootstrap';
 
 import { Pagination } from 'antd';
-import type { Cards } from '../interfaces/Card'
+import type { Cards } from '../interfaces/Card';
 import { searchYuGiOhCard } from '../utils/mutations';
 import type { YuGiOhCard } from '../interfaces/YuGiOhAPISearch';
-// import Auth from '../utils/auth';
-// import { saveCardIds, getSavedCardIds } from '../utils/localStorage';
 import CardList from '../components/CardLayout';
 
 const SearchPage = () => {
     const [searchedCards, setSearchedCards] = useState<Cards[]>([]);
-
-    const [searchInput, setSearchInput] = useState('')
+    const [searchInput, setSearchInput] = useState('');
     const [dropInput, setDropInput] = useState('fname');
-    // const [savedCardIds, setSavedCardIds] = useState(getSavedCardIds());
-    const [currentPage, setCurrentPage] = useState(0);
-    const [error, setError] = useState('');
+    const [currentPage, setCurrentPage] = useState(1); // Start from page 1
     const [currentCardsPer, setCardsPer] = useState(6);
-
-    // useEffect(() => {
-    //     return () => saveCardIds(savedCardIds);
-    // })
+    const [error, setError] = useState('');
 
     const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -43,14 +32,10 @@ const SearchPage = () => {
             const response = await searchYuGiOhCard(dropInput, searchInput);
 
             if (!response.ok) {
-                throw new Error('something went wrong!');
+                throw new Error('Something went wrong!');
             }
 
             const { data } = await response.json();
-            // console.log(data);
-console.log("here is the api data:",data);
-console.log("here is the searched card data:",searchedCards);
-
 
             const cardData = data.map((card: YuGiOhCard) => ({
                 cardId: card.id,
@@ -65,78 +50,30 @@ console.log("here is the searched card data:",searchedCards);
                 atk: card.atk,
                 def: card.def,
             }));
-            // console.log(cardData);
-
-            // for (const card of cardData) {
-            //     if (card.image) {
-            //         const filename = `${card.cardId}.jpg`;
-
-            //         await downloadCardImage(card.image, filename);
-            //     }
-            // }
 
             setSearchedCards(cardData);
             setSearchInput('');
-            setCurrentPage(1);
+            setCurrentPage(1); // Reset to the first page
             setError('');
         } catch (err) {
             console.error(err);
-            setError('An occurred while searching. Make sure you have input the card data correctly.');
+            setError('An error occurred while searching. Make sure you have input the card data correctly.');
         }
     };
 
-
-    /*Pagination variables*/
+    /* Pagination variables */
     const lastIndex = currentPage * currentCardsPer;
     const firstIndex = lastIndex - currentCardsPer;
-
     const currentCards = searchedCards.slice(firstIndex, lastIndex);
 
-    const totalPages = Math.ceil(searchedCards.length / currentCardsPer);
+    const totalCards = searchedCards.length;
 
-    const onPageChange = (page: number, size: number) => {
+    const onPageChange = (page: number, size?: number) => {
         setCurrentPage(page);
-        setCardsPer(size);
-    }
-    //
-
-
-
-    // const downloadCardImage = async (url: string, filename: string) => {
-    //     try {
-    //         const response = await fetch(url);
-
-    //         if (!response.ok) {
-    //             throw new Error('Failed to fetch image url');
-    //         }
-
-    //         const data = await response.json();
-
-    //         const outPath = path.join(__dirname, 'images', filename);
-
-    //         fs.writeFileSync(outPath, data);
-
-    //         return outPath;
-
-    //     } catch(error) {
-    //         console.error('Error downloading image: ', error);
-    //     }
-    // }
-
-    // const handleSaveCard = async (cardId: string) => {
-    //     const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-    //     if (!token) {
-    //         return false;
-    //     }
-
-    //     try {
-
-    //         setSavedCardIds([cardId]);
-    //     } catch (error) {
-    //         console.error('Error saving card: ', error);
-    //     }
-    // };
+        if (size) {
+            setCardsPer(size);
+        }
+    };
 
     return (
         <>
@@ -168,7 +105,6 @@ console.log("here is the searched card data:",searchedCards);
                                     <option value='archetype'>Search by Card Archetype (e.g. Artifact, Bujin, Doodle Beast)</option>
                                 </Form.Control>
                                 {error && <p style={{ color: 'red' }}>{error}</p>}
-
                             </Col>
                             <Col xs={12} md={4}>
                                 <Button type='submit' variant='success' size='lg'>Submit Search</Button>
@@ -191,7 +127,7 @@ console.log("here is the searched card data:",searchedCards);
                     <Pagination
                         hideOnSinglePage={true}
                         pageSize={currentCardsPer}
-                        total={totalPages}
+                        total={totalCards} // Pass the total number of cards, not pages
                         current={currentPage}
                         showSizeChanger={true}
                         pageSizeOptions={['6', '12', '18', '24']}

@@ -89,7 +89,7 @@ const UserPage = () => {
                   title={username|| "User"}
                   description={
                     <>
-                      <p className='userBio'>This is my Bio!</p>
+                      {/* <p className='userBio'>This is my Bio!</p> */}
                       <p className='extraText'>Let's Battle!</p>
                     </>
                   }
