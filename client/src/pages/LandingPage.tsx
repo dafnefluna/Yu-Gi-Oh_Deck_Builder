@@ -20,7 +20,7 @@ const LandingPage: React.FC = () => {
 
   // State for error message
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
+// eslint-disable-next-line
   const handleLogin: FormProps<FieldType>["onFinish"] = async (values: any) => {
     setErrorMessage(null); // Clear previous error message
     try {
@@ -38,7 +38,7 @@ const LandingPage: React.FC = () => {
       setErrorMessage("Incorrect Username or Password");
     }
   };
-
+// eslint-disable-next-line
   const handleSignup: FormProps<FieldType>["onFinish"] = async (values: any) => {
     setErrorMessage(null); // Clear previous error message
     try {
@@ -47,7 +47,9 @@ const LandingPage: React.FC = () => {
       });
 
       Auth.login(data.addUser.token);
-    } catch (error: any) {
+    }
+    // eslint-disable-next-line 
+    catch (error: any) {
       console.error(error);
 
       // Check for duplicate key error (MongoDB E11000 error code)

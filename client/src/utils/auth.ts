@@ -6,7 +6,7 @@ interface ExtendedJwt extends JwtPayload {
         _id: string, // Add user ID here
         exp: number,
     }
-};
+}
 
 class AuthService {
     getProfile() {

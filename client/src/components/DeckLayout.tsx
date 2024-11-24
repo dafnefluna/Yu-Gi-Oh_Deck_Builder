@@ -11,8 +11,9 @@ interface DeckListProps {
 
 const DeckList: React.FC<DeckListProps> = ({ decks }) => {
     const [showModal, setShowModal] = useState(false);
+    // eslint-disable-next-line
     const [selectedCard, setSelectedCard] = useState<any>(null);
-
+    // eslint-disable-next-line
     const handleCardClick = (card: any) => {
         setSelectedCard(card);
         setShowModal(true);
