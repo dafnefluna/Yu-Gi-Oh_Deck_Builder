@@ -1,5 +1,5 @@
 export interface Cards {
-    id: BigInteger;
+    _id?: string;
     image: string;
     name: string;
     attribute: string;
@@ -8,6 +8,6 @@ export interface Cards {
     type: string;
     archetype: string;
     description: string;
-    atk: BigInteger;
-    def: BigInteger;
+    atk: number;
+    def: number;
 }
