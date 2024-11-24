@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Card, Accordion, Modal, Button, Container } from 'react-bootstrap';
 import { Decks } from '../interfaces/Deck.js';
-import CardBack from '../assets/button.png';
+import CardBack from '../assets/BackOfCard.png';
 import UpdateDeck from "../components/UpdateDeck";
 import DeleteDeck from './DeleteDeck.js';
 
@@ -59,10 +59,10 @@ console.log(decks);
                                                     left: '50%',
                                                     transform: 'translate(-50%, -50%)',
                                                     color: 'white',
-                                                    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                                                    // backgroundColor: 'rgba(0, 0, 0, 0.6)',
                                                     padding: '5px 10px',
                                                     borderRadius: '5px',
-                                                    fontSize: '2.3em',
+                                                    fontSize: '3em',
                                                     fontWeight: 'bold',
                                                     textAlign: 'center',
                                                 }}
@@ -72,7 +72,7 @@ console.log(decks);
                                         </div>
                                         <Card.Body>
                                             <Card.Text>
-                                                Playable?: {deck.playable ? 'yes' : 'no'}
+                                                Playable: {deck.playable ? 'Yes' : 'No'}
                                             </Card.Text>
                                             <Card.Text>Type: {deck.type}</Card.Text>
                                         </Card.Body>
@@ -91,13 +91,13 @@ console.log(decks);
                                                         <Card.Img
                                                             src={card.image}
                                                             alt={`Art for ${card.name}`}
-                                                            variant="top"
-                                                            style={{ maxHeight: '100px', objectFit: 'contain' }}
+                                                            // variant="top"
+                                                            style={{ objectFit: 'contain' }}
                                                         />
                                                     )}
-                                                    <Card.Body>
+                                                    {/* <Card.Body>
                                                         <Card.Text>{card.name}</Card.Text>
-                                                    </Card.Body>
+                                                    </Card.Body> */}
                                                 </Card>
                                             </Col>
                                         ))}
@@ -165,9 +165,9 @@ console.log(decks);
                                                             style={{ maxHeight: '100px', objectFit: 'contain' }}
                                                         />
                                                     )}
-                                                    <Card.Body>
+                                                    {/* <Card.Body>
                                                         <Card.Text>{card.name}</Card.Text>
-                                                    </Card.Body>
+                                                    </Card.Body> */}
                                                 </Card>
                                             </Col>
                                         ))}
@@ -235,9 +235,9 @@ console.log(decks);
                                                             style={{ maxHeight: '100px', objectFit: 'contain' }}
                                                         />
                                                     )}
-                                                    <Card.Body>
+                                                    {/* <Card.Body>
                                                         <Card.Text>{card.name}</Card.Text>
-                                                    </Card.Body>
+                                                    </Card.Body> */}
                                                 </Card>
                                             </Col>
                                         ))}

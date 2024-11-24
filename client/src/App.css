@@ -128,8 +128,12 @@ h6 {
 
 .accordion-button {
   background-color: black !important;
+  /* border-radius: 0; */
 }
 
+/* .accordion-button.collapsed{
+  padding-right: 0;
+} */
 .accordion-button:not(.collapsed) {
   background-color: #132945 !important;
 }
