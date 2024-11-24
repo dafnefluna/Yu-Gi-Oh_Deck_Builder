@@ -95,7 +95,7 @@ const typeDefs = gql`
         updateDeckName(deckId: String!, input: DeckInput): Deck
         deleteCardFromUser(cardId: ID!): User
         deleteCard(cardId: ID!): Card
-        deleteDeck(deckId: ID!):Deck
+        deleteDeck(deckId: ID!): User
     }
 `
 export default typeDefs;

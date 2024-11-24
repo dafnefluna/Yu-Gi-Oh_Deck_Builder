@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Row, Col, Card, Accordion, Modal, Button, Container } from 'react-bootstrap';
 import { Decks } from '../interfaces/Deck.js';
 import CardBack from '../assets/button.png';
+import UpdateDeck from "../components/UpdateDeck";
+import DeleteDeck from './DeleteDeck.js';
 
 interface DeckListProps {
     decks: Decks[];
@@ -39,7 +41,7 @@ console.log(decks);
                 <Col xs={12} md={4} class='accordion'>
                 <Accordion >
                 {group1.map((deck, index) => (
-                            <Accordion.Item eventKey={index.toString()} key={deck.id}>
+                            <Accordion.Item eventKey={index.toString()} key={deck._id}>
                                 <Accordion.Header>
                                     <Card border="dark" style={{ position: 'relative', width: '100%' }} >
                                         <div style={{ position: 'relative', width: '100%' }}>
@@ -99,6 +101,9 @@ console.log(decks);
                                             </Col>
                                         ))}
                                     </Row>
+                                    <UpdateDeck deckId={deck._id} />
+                                    <div style={{padding: "10px"}}></div>
+                                    <DeleteDeck deckId={deck._id} deckName={deck.name} />
                                 </Accordion.Body>
                             </Accordion.Item>))}
                         </Accordion>
@@ -106,7 +111,7 @@ console.log(decks);
                     <Col xs={12} md={4} class='accordion'>
                 <Accordion >
                 {group2.map((deck, index) => (
-                            <Accordion.Item eventKey={index.toString()} key={deck.id}>
+                            <Accordion.Item eventKey={index.toString()} key={deck._id}>
                                 <Accordion.Header>
                                     <Card border="dark">
                                         <div style={{ position: 'relative', width: '100%' }}>
@@ -166,6 +171,9 @@ console.log(decks);
                                             </Col>
                                         ))}
                                     </Row>
+                                    <UpdateDeck deckId={deck._id} />
+                                    <div style={{padding: "10px"}}></div>
+                                    <DeleteDeck deckId={deck._id} deckName={deck.name} />
                                 </Accordion.Body>
                             </Accordion.Item>))}
                         </Accordion>
@@ -173,7 +181,7 @@ console.log(decks);
                     <Col xs={12} md={4} class='accordion'>
                 <Accordion >
                 {group3.map((deck, index) => (
-                            <Accordion.Item eventKey={index.toString()} key={deck.id}>
+                            <Accordion.Item eventKey={index.toString()} key={deck._id}>
                                 <Accordion.Header>
                                     <Card border="dark">
                                         <div style={{ position: 'relative', width: '100%' }}>
@@ -233,6 +241,9 @@ console.log(decks);
                                             </Col>
                                         ))}
                                     </Row>
+                                    <UpdateDeck deckId={deck._id} />
+                                    <div style={{padding: "10px"}}></div>
+                                    <DeleteDeck deckId={deck._id} deckName={deck.name} />
                                 </Accordion.Body>
                             </Accordion.Item>))}
                         </Accordion>

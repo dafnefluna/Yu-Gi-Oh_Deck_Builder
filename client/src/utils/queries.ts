@@ -69,22 +69,22 @@ export const QUERY_ME = gql`
 
 export const QUERY_GETALLCARDS = gql`
     query AllCards($username: String!) {
-        user(username: $username) {
-            savedCards {
-                _id
-                name
-                type
-                description
-                attack
-                defense
-                level
-                attribute
-                race
-                archetype
-                image
-            }
-        }
+  user(username: $username) {
+    savedCards {
+      _id
+      name
+      type
+      description
+      attack
+      defense
+      level
+      attribute
+      race
+      archetype
+      image
     }
+  }
+}
 `;
 
 

@@ -7,6 +7,7 @@ import { QUERY_GETALLDECKS } from '../utils/queries';
 import DeckList from '../components/DeckLayout';
 import Auth from "../utils/auth";
 import { Link } from "react-router-dom";
+import CreateDeck from "../components/CreateDeck";
 
 const DeckPage: React.FC = () => {
     const [decks, setDecks] = useState<Decks[]>([]);
@@ -74,7 +75,7 @@ const DeckPage: React.FC = () => {
                     ? `You have ${decks.length} decks:`
                     : `Please create a deck first!`}
             </h2>
-
+<CreateDeck></CreateDeck>
             <DeckList decks={currentDecks} />
 
             <div className="d-flex justify-content-center mt-4 mb-4 pagination-container">

@@ -15,7 +15,7 @@ const CardCollectionPage: React.FC = () => {
     const username = Auth.getUsername();
     // console.log('Username:', username);
 
-    const { data: cardDataQuery, loading: cardLoading, error: cardError, refetch } = useQuery(QUERY_GETALLCARDS, {
+    const { data: cardDataQuery, loading: cardLoading, error: cardError } = useQuery(QUERY_GETALLCARDS, {
         variables: { username },
     });
 

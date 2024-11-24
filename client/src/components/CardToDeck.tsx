@@ -29,9 +29,10 @@ const CardtoDeck: React.FC<CardtoDeckProps> = ({ card }) => {
 
     const handleSubmit = async () => {
         let cardId = card._id;
+        console.log('here is the cardID:', cardId);
     
-        // If the card doesn't have an _id yet (new card), save it first
-        if (!cardId && selectedOption === '2') {
+        // Save new card if needed
+        if (!cardId && selectedOption) {
             const { data } = await addCardToUserMutation({
                 variables: {
                     input: {
@@ -50,24 +51,22 @@ const CardtoDeck: React.FC<CardtoDeckProps> = ({ card }) => {
             });
             cardId = data.addCardToUser._id;
         }
-    console.log(`here is the deck data:`, deckDataQuery);
     
-        // Find the deck by name in the allDecks array
-        const selectedDeck = deckDataQuery?.allDecks.find((deck: Decks) => deck.name === selectedDeckId);
+        console.log(`here is the deck data:`, deckDataQuery);
+    
+        // Find the selected deck by ID
+        const selectedDeck = deckDataQuery?.allDecks.find((deck: Decks) => deck._id === selectedDeckId);
         console.log(`here is the selected deck:`, selectedDeck);
-
-        // Perform the mutation based on the selected option
+    
         if (selectedOption === '1') {
             console.log('Card Saved to My Collection');
-            // Call SAVE_NEW_CARD mutation here if needed, if the card was not added already
         } else if (selectedOption === '2' && selectedDeck) {
             console.log(`here is the deckId: ${selectedDeck._id}`);
             console.log(`here is the cardId: ${cardId}`);
     
-            // Add the card to the selected deck
             await addCardToDeckMutation({
                 variables: {
-                    deckId: selectedDeck._id,  // Use the deck's id here
+                    deckId: selectedDeck._id,
                     cardId: cardId,
                 },
             });
@@ -104,7 +103,8 @@ const CardtoDeck: React.FC<CardtoDeckProps> = ({ card }) => {
                     >
                         <option value="">Select a deck</option>
                         {deckDataQuery.allDecks.map((deck: Decks) => (
-                            <option key={deck.id} value={deck.id}> {/* Pass the deck.id */}
+                            // console.log(deck),
+                            <option key={deck._id} value={deck._id}> {/* Pass the deck.id */}
                                 {deck.name} {/* Display deck name */}
                             </option>
                         ))}
