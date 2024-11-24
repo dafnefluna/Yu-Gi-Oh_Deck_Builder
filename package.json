@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/dist/server.js",
   "scripts": {
-    "start": "cd server && node server/server.js",
+    "start": "cd server && node dist/server.js",
     "start:dev": "concurrently \"cd server && npm run watch\" \"wait-on tcp:3001 && cd client && npm run dev\"",
     "server": "cd server && npm start",
     "server:dev": "cd server && npm run dev",
@@ -20,10 +20,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "antd": "^5.22.1",
+    "antd": "^5.22.2",
     "bootstrap": "^5.3.3",
     "concurrently": "^8.2.2",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "nodemon": "^3.1.7"
   },
   "devDependencies": {
     "wait-on": "^7.2.0"

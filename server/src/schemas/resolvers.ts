@@ -33,12 +33,11 @@ interface AddCardToDeckArg {
 
 interface AddCardArg {
     input: {
-        apiId: number
         name: string
         type: string
         description: string
-        attack: number
-        defense: number
+        atk: number
+        def: number
         level: number
         attribute: string
         race: string
@@ -78,7 +77,13 @@ interface updateDeckArg {
 const resolvers = {
     Query: {
         user: async (_parent: any, { username }: UserArgs): Promise<IUser | null> => {
-            return User.findOne({ username }).populate("savedCards").populate("allDecks");
+            return User.findOne({ username }).populate("savedCards").populate({
+                path: 'allDecks',  // Populating the allDecks field
+                populate: {
+                    path: 'cards',  // Populating the cards field inside each deck
+                    model: 'Card',  // Referencing the Card model
+                }
+            });
         },
         me: async (_parent: any, _args: any, context: any) => {
             // If the user is authenticated, find and return the user's information
@@ -113,27 +118,21 @@ const resolvers = {
             return { token, user };
         },
 
-        login: async (_parent: any, { username, password }: LoginUserArgs) => {
-            // Find a user with the provided email
+        login: async (_parent: any, {username, password }: LoginUserArgs) => {
             const user = await User.findOne({ username });
 
-            // If no user is found, throw an AuthenticationError
             if (!user) {
                 throw new AuthenticationError('Could not authenticate user.');
             }
 
-            // Check if the provided password is correct
             const correctPw = await user.isCorrectPassword(password);
 
-            // If the password is incorrect, throw an AuthenticationError
             if (!correctPw) {
                 throw new AuthenticationError('Could not authenticate user.');
             }
 
-            // Sign a token with the user's information
             const token = signToken(user.username, user.email, user._id);
 
-            // Return the token and the user
             return { token, user };
         },
 
@@ -155,8 +154,10 @@ const resolvers = {
 // note: we switched to $push from $addtoset to have duplicates cards in their deck. For v2 we should consider add to set when we figure out the authenticating the card that exist irl
         addCardToDeck: async (_parent: any, { cardId, deckId }: AddCardToDeckArg, context: any) => {
             if (context.user) {
+                console.log('here is the server cardId:', cardId);
+                console.log('here is the server deckId:', deckId);
                 const cardToAdd = await Card.findById(cardId);
-
+                console.log('here is the server card after findById:', cardToAdd);
                 return await Deck.findOneAndUpdate(
                     { _id: deckId },
                     { $push: { cards: cardToAdd, } },
@@ -187,9 +188,9 @@ const resolvers = {
         //         const deck = await Deck.findById(deckId);
         //             console.log(deck);
         //             if (deck) {
-        //         const cardIndex = deck.cards?.indexOf({ _id: cardId });
+        //         const cardIndex = deck.cards?.findIndex(card => card.equals(cardId));
         //         if (cardIndex) {
-        //             deck.cards?.splice(cardIndex)
+        //             deck.cards?.splice(cardIndex,1)
         //         };
         //         const updatedDeck = await deck.save();
         //         return updatedDeck
@@ -215,6 +216,17 @@ const resolvers = {
                 return User.findOneAndUpdate(
                     { _id: context.user._id },
                     { $pull:{ savedCards: cardId }},
+                    { new: true }).populate("savedCards").populate("allDecks");
+            }
+            throw AuthenticationError;
+            ('You need to be logged in!');
+        },
+        deleteDeck: async (_parent: any, { deckId }: DeckArg, context: any) => {
+            if (context.user) {
+                await Deck.findOneAndDelete({ _id: deckId });
+                return User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull:{ allDecks: deckId }},
                     { new: true }).populate("savedCards").populate("allDecks");
             }
             throw AuthenticationError;

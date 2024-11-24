@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 // note: when we get to the end in type User, think about removing password for security purposes if nothing break
 // the arrays are referring the types in
 // todo: double check the cardId/deckId vs _id in the backend ask TA 11/17
-
+// testing /
 const typeDefs = gql`
     type User {
         _id: ID
@@ -15,14 +15,14 @@ const typeDefs = gql`
         allDecks: [Deck] 
     }
 
+
     type Card {
         _id: ID
-        apiId: Int
         name: String
         type: String
         description: String
-        attack: Int
-        defense: Int
+        atk: Int
+        def: Int
         level: Int
         attribute: String
         race: String
@@ -31,12 +31,11 @@ const typeDefs = gql`
     }
 
     input CardInput{
-        apiId: Int
         name: String
         type: String
         description: String
-        attack: Int
-        defense: Int
+        atk: Int
+        def: Int
         level: Int
         attribute: String
         race: String
@@ -96,6 +95,7 @@ const typeDefs = gql`
         updateDeckName(deckId: String!, input: DeckInput): Deck
         deleteCardFromUser(cardId: ID!): User
         deleteCard(cardId: ID!): Card
+        deleteDeck(deckId: ID!): User
     }
 `
 export default typeDefs;

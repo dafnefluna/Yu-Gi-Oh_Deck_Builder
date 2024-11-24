@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 // import fs from 'fs';
 // import path from 'path';
 
@@ -10,12 +10,12 @@ import {
     Row
 } from 'react-bootstrap';
 
-import Pagination from '../components/Pagination';
+import { Pagination } from 'antd';
 import type { Cards } from '../interfaces/Card'
 import { searchYuGiOhCard } from '../utils/mutations';
 import type { YuGiOhCard } from '../interfaces/YuGiOhAPISearch';
-import Auth from '../utils/auth';
-import { saveCardIds, getSavedCardIds } from '../utils/localStorage';
+// import Auth from '../utils/auth';
+// import { saveCardIds, getSavedCardIds } from '../utils/localStorage';
 import CardList from '../components/CardLayout';
 
 const SearchPage = () => {
@@ -23,15 +23,14 @@ const SearchPage = () => {
 
     const [searchInput, setSearchInput] = useState('')
     const [dropInput, setDropInput] = useState('fname');
-    const [savedCardIds, setSavedCardIds] = useState(getSavedCardIds());
+    // const [savedCardIds, setSavedCardIds] = useState(getSavedCardIds());
     const [currentPage, setCurrentPage] = useState(0);
     const [error, setError] = useState('');
+    const [currentCardsPer, setCardsPer] = useState(6);
 
-    const cardsPerPage = 5;
-
-    useEffect(() => {
-        return () => saveCardIds(savedCardIds);
-    })
+    // useEffect(() => {
+    //     return () => saveCardIds(savedCardIds);
+    // })
 
     const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -49,6 +48,9 @@ const SearchPage = () => {
 
             const { data } = await response.json();
             // console.log(data);
+console.log("here is the api data:",data);
+console.log("here is the searched card data:",searchedCards);
+
 
             const cardData = data.map((card: YuGiOhCard) => ({
                 cardId: card.id,
@@ -85,23 +87,16 @@ const SearchPage = () => {
 
 
     /*Pagination variables*/
-    const lastIndex = currentPage * cardsPerPage;
-    const firstIndex = lastIndex - cardsPerPage;
+    const lastIndex = currentPage * currentCardsPer;
+    const firstIndex = lastIndex - currentCardsPer;
 
     const currentCards = searchedCards.slice(firstIndex, lastIndex);
 
-    const totalPages = Math.ceil(searchedCards.length / cardsPerPage);
+    const totalPages = Math.ceil(searchedCards.length / currentCardsPer);
 
-    const prevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    }
-
-    const nextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
+    const onPageChange = (page: number, size: number) => {
+        setCurrentPage(page);
+        setCardsPer(size);
     }
     //
 
@@ -128,23 +123,24 @@ const SearchPage = () => {
     //     }
     // }
 
-    const handleSaveCard = async (cardId: string) => {
-        const token = Auth.loggedIn() ? Auth.getToken() : null;
+    // const handleSaveCard = async (cardId: string) => {
+    //     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-        if (!token) {
-            return false;
-        }
+    //     if (!token) {
+    //         return false;
+    //     }
 
-        try {
+    //     try {
 
-            setSavedCardIds([cardId]);
-        } catch (error) {
-            console.error('Error saving card: ', error);
-        }
-    };
+    //         setSavedCardIds([cardId]);
+    //     } catch (error) {
+    //         console.error('Error saving card: ', error);
+    //     }
+    // };
 
     return (
         <>
+            <div className='backgroundStyle'></div>
             <div className='text-light bg-dark p-5'>
                 <Container>
                     <h1>Yu-Gi-Oh Deck Builder</h1>
@@ -186,17 +182,23 @@ const SearchPage = () => {
                 <h2 className='pt-5'>
                     {searchedCards.length
                         ? `Viewing ${searchedCards.length} results:`
-                        : 'Search for a card to begin'}
+                        : ""}
                 </h2>
-                
-                <CardList cards = {currentCards} savedCardIds = {savedCardIds} handleSaveCard = {handleSaveCard} />
 
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages = {totalPages}
-                    prevPage = {prevPage}
-                    nextPage = {nextPage}
-                />
+                <CardList cards={currentCards} />
+
+                <div className='d-flex justify-content-center mt-4 mb-4 pagination-container'>
+                    <Pagination
+                        hideOnSinglePage={true}
+                        pageSize={currentCardsPer}
+                        total={totalPages}
+                        current={currentPage}
+                        showSizeChanger={true}
+                        pageSizeOptions={['6', '12', '18', '24']}
+                        onChange={onPageChange}
+                        size={'default'}
+                    />
+                </div>
             </Container>
         </>
     );

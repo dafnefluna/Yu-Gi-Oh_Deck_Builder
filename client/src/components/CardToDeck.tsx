@@ -1,70 +1,135 @@
-import { ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 import { Cards } from '../interfaces/Card.js';
-import { ADD_CARD_TO_DECK} from '../utils/mutations.js';
+import { Decks } from '../interfaces/Deck.js';
+import { ADD_CARD_TO_DECK, SAVE_NEW_CARD } from '../utils/mutations.js';
 import { useMutation, useQuery } from '@apollo/client';
-import { QUERY_GETSINGLECARD } from '../utils/queries.js';
+import { QUERY_GETALLDECKS } from '../utils/queries.js';
+import Auth from "../utils/auth";
 
+interface CardtoDeckProps {
+    card: Cards;
+}
 
-// this component is the functionality to be able to save a card from the user collection to a deck.
-// use <CardToDeck cardId={card.id}></CardToDeck> when I put this in another page or whatever and import
+const username = Auth.getUsername();
 
-// 
-const CardtoDeck: React.FC<{cardId: string}> = ({ cardId }) => {
-    // establish state for the card data
-    const [cardData, setCardData] = useState<Cards | null>(null);
-    // const [deckData, setDeckData] = useState<
-    // do the above for deckdata and create an interface
-
-    // establish useQuery for card with id
-    const { data, loading, error } = useQuery(QUERY_GETSINGLECARD, { 
-        variables: { id: cardId}, 
+const CardtoDeck: React.FC<CardtoDeckProps> = ({ card }) => {
+    const [selectedOption, setSelectedOption] = useState<string | null>(null); // Tracks selected "Save Card" option
+    const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null); // Tracks selected deck
+    const [statusMessage, setStatusMessage] = useState<string | null>(null); // Tracks status message
+    const { data: deckDataQuery, loading: deckLoading, error: deckError } = useQuery(QUERY_GETALLDECKS, {
+        variables: { username }
     });
 
-    // establish usemutation to get the addcardtodeck mutation
     const [addCardToDeckMutation] = useMutation(ADD_CARD_TO_DECK);
-    // query to getAllDecks
-    // mutation to Save new card
-    // mutatiion to create new deck
+    const [addCardToUserMutation] = useMutation(SAVE_NEW_CARD);
 
+    // Effect to set the first deck as the default selected deck
     useEffect(() => {
-        if (data && data.card) {
-            setCardData(data.card);
+        if (deckDataQuery && deckDataQuery.allDecks) {
+            setSelectedDeckId(deckDataQuery.allDecks[0]?.id || null);
         }
-    }, [data]);
+    }, [deckDataQuery]);
 
-    // function to add card to deck. aync bc wait f
-    const addCardToDeck = async () => {
-        if (cardData) {
-            try {
-                await addCardToDeckMutation({
-                    variables: {
-                        id: cardData.id,
+    if (!card) return null;
+
+    const handleSubmit = async () => {
+        let cardId = card._id;
+        console.log('here is the card data:', card);
+    
+        // Save new card if needed
+        if (!cardId && selectedOption) {
+            const { data } = await addCardToUserMutation({
+                variables: {
+                    input: {
+                        name: card.name,
+                        attribute: card.attribute,
+                        level: card.level,
+                        race: card.race,
+                        type: card.type,
+                        archetype: card.archetype,
+                        description: card.description,
+                        atk: card.atk,
+                        def: card.def,
+                        image: card.image,
                     },
-                });
-                console.log('Card added to deck successfully');
-            } catch (err) {
-                console.error('Error adding card to deck:', err);
-            }
+                },
+            });
+            cardId = data.addCardToUser._id;
+        }
+    
+        console.log(`here is the deck data:`, deckDataQuery);
+    
+        // Find the selected deck by ID
+        const selectedDeck = deckDataQuery?.user.allDecks.find((deck: Decks) => deck._id === selectedDeckId);
+        console.log(`here is the selected deck:`, selectedDeck);
+    
+        if (selectedOption === '1') {
+            setStatusMessage("Card Added To Collection");
+            console.log('Card Saved to My Collection');
+        } else if (selectedOption === '2' && selectedDeck) {
+            console.log(`here is the deckId: ${selectedDeck._id}`);
+            console.log(`here is the cardId: ${cardId}`);
+    
+            await addCardToDeckMutation({
+                variables: {
+                    deckId: selectedDeck._id,
+                    cardId: cardId,
+                },
+            });
+            setStatusMessage("Card Added to Deck");
+            console.log('Card added to existing deck successfully');
+        } else {
+            console.error('No deck selected');
+            setStatusMessage(null);
         }
     };
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error loading card data: {error.message}</p>;
+    if (deckLoading) return <p>Loading...</p>;
+    if (deckError) return <p>Error loading deck data: {deckError.message}</p>;
 
     return (
-    <div>
-        <h1>{cardData?.name}</h1>
-    <ButtonGroup>
-        <DropdownButton as={ButtonGroup} title="Save Card" id="bg-nested-dropdown" onClick={addCardToDeck}>
-            <Dropdown.Item eventKey="1">... To My Collection</Dropdown.Item>
-            <Dropdown.Item eventKey="2">... To New Deck</Dropdown.Item>
-            <Dropdown.Item eventKey="3">... To Existing Deck</Dropdown.Item>
-        </DropdownButton>
-    </ButtonGroup>
-    </div>
-    )
+        <div>
+            {/* Dropdown to select "Save Card" option */}
+            <Form.Group controlId="saveCardOption">
+                <Form.Label>Save Card</Form.Label>
+                <Form.Control as="select" value={selectedOption || ''} onChange={(e) => setSelectedOption(e.target.value)}>
+                    <option value="">Select an option</option>
+                    <option value="1">To My Collection</option>
+                    <option value="2">To Existing Deck</option>
+                </Form.Control>
+            </Form.Group>
+
+            {/* If "To Existing Deck" is selected, show the deck selection */}
+            {selectedOption === '2' && deckDataQuery?.user.allDecks && (
+                <Form.Group controlId="selectDeck">
+                    <Form.Label style={{paddingTop: "10px"}}>Select Deck:</Form.Label>
+                    <Form.Control
+                        as="select"
+                        value={selectedDeckId || ''}
+                        onChange={(e) => setSelectedDeckId(e.target.value)}
+                    >
+                        <option value="">Select a deck</option>
+                        {deckDataQuery.user.allDecks.map((deck: Decks) => (
+                            <option key={deck._id} value={deck._id}> {/* Pass the deck.id */}
+                                {deck.name} {/* Display deck name */}
+                            </option>
+                        ))}
+                    </Form.Control>
+                </Form.Group>
+            )}
+
+            <div style={{paddingTop: "10px"}}></div>
+
+            {/* Status Message */}
+            {statusMessage && <p style={{ color: "green", marginBottom: "10px" }}>{statusMessage}</p>}
+
+            {/* Submit button */}
+            <Button variant="primary" onClick={handleSubmit}>
+                Submit
+            </Button>
+        </div>
+    );
 };
 
 export default CardtoDeck;
-

@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 
 // note: mongoose automatically adds ID
 export interface IUser extends Document {
+    id: string;
     username: string;
     email: string;
     password: string;
@@ -53,7 +54,7 @@ const userSchema = new Schema<IUser>(
     }
 );
 
-userSchema.pre<IUser>('save', async function (next) {
+userSchema.pre('save', async function (next) {
     if (this.isNew || this.isModified('password')) {
         const saltRounds = 10;
         this.password = await bcrypt.hash(this.password, saltRounds);
@@ -62,8 +63,8 @@ userSchema.pre<IUser>('save', async function (next) {
     next();
 });
 
-userSchema.methods.isCorrectPassword = async function (password: string): Promise<boolean> {
-    return bcrypt.compare(password, this.password);
+userSchema.methods.isCorrectPassword = async function (password: string) {
+    return await bcrypt.compare(password, this.password);
 };
 
 const User = model('User', userSchema);
