@@ -15,6 +15,11 @@ This application is for the avid Yu-Gi-Oh collector and dueler. Our application 
 
 To use this application as intended you can visit the deployed link. If you'd like to use this code as a starter for your own project you can clone this repo into your local machine. Begin by running 'npm i' in your root. For good measure run 'npm i" in your client and server. There are various packages to familiarize yourself with such as: React Bootstrap, ANT Design, MongoDB, Mongoose, and Apollo to handle the major functionalities of the application. Look a the package.json in the root, client, and server. To fully see the complete app you will 'npm run build' and after you will 'npm run start:dev".
 
+We encourage you to use your own art for the backgrounds.
+
+We would like to thank the YuGiOh Fan Artist that created the landing page art for our project:
+Instagram: ericyan.freitas and x/twitter: EricaYan97
+
 ## Usage
 
  When I seach for a card, I am able save the card to my collection. I am then able to use that collection to create decks. All these functions are faciliated by MongoDB and the collection relationships between the user, card, and deck models.
