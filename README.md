@@ -2,7 +2,7 @@
 
 ## Description
 
-This application is for the avid Yu-Gi-Oh collector and dueler. Our application lets you digitize your physical card collection so you can make decks easier. This way your card collection will stay pristine and neat until you need to pull them out for a duel. Checkout the link to use the application [insert link here]
+This application is for the avid Yu-Gi-Oh collector and dueler. Our application lets you digitize your physical card collection so you can make decks easier. This way your card collection will stay pristine and neat until you need to pull them out for a duel. Checkout the link to use the application [https://yu-gi-oh-deck-builder-86y8.onrender.com]
 
 ## Table of Contents
 
@@ -44,4 +44,4 @@ We use github actions to perform a lint check for formatting before merging to o
 
 ## Contact Us
 
-For more information about our project please visit our Github Repo <https://github.com/andrew-surrena/Yu-Gi-Oh_Deck_Builder>. Check out our other projects by vising our githubs: at dafnefluna, andrew-surrena, SirrBarnes.
+For more information about our project please visit our Github Repo <https://github.com/dafnefluna/Yu-Gi-Oh_Deck_Builder>. Check out our other projects by vising our githubs: at dafnefluna, andrew-surrena, SirrBarnes.
